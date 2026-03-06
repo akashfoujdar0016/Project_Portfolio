@@ -18,13 +18,12 @@
   --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* ── 2. BASE RESET & ATMOSPHERE ── */
+/* ── 2. BASE RESET ── */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 html {
@@ -39,10 +38,10 @@ body {
   line-height: 1.7;
   font-size: 16px;
   overflow-x: hidden;
-  position: relative;
+  width: 100%;
 }
 
-/* Cinematic Grain */
+/* Background Texture */
 body::before {
   content: '';
   position: fixed;
@@ -54,44 +53,47 @@ body::before {
   mix-blend-mode: overlay;
 }
 
-/* ── 3. NAVBAR (Centred Links, Right Aligned Timer) ── */
+/* ── 3. NAVBAR (GRID FIX) ── */
+/* Grid is safer than Flexbox for perfect centering */
 nav {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 80px; /* Fixed height for consistent alignment */
+  height: 80px;
   z-index: 1000;
+  padding: 0 4%;
   
-  display: flex;
-  justify-content: space-between; /* Pushes Logo Left, Timer Right */
+  /* The Fix: 3 Columns. Left, Center (Auto), Right */
+  display: grid; 
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  padding: 0 5%;
   
   background: rgba(6, 6, 8, 0.85);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--color-border);
 }
 
-/* Logo (Left) */
-nav .logo {
+/* Column 1: Logo (Align Left) */
+nav .logo, 
+nav > div:first-child {
+  justify-self: start;
   font-family: var(--font-space);
   font-weight: 700;
   font-size: 1.5rem;
   color: #fff;
   text-decoration: none;
-  z-index: 20; /* Ensures it stays above center links if screen is small */
 }
 
-/* Navigation Links (Dead Center) */
-nav ul, nav .nav-links {
-  position: absolute; /* This forces absolute centering */
-  left: 50%;
-  transform: translateX(-50%);
-  
+/* Column 2: Links (Align Center) */
+/* This targets ULs or divs containing the links */
+nav ul, 
+nav .nav-links,
+nav .links {
+  justify-self: center; /* Forces it to the middle grid cell */
   display: flex;
+  gap: 3rem; /* Space between words */
   list-style: none;
-  gap: 3rem; /* Spacing between links */
   margin: 0;
   padding: 0;
 }
@@ -106,43 +108,39 @@ nav ul, nav .nav-links {
   letter-spacing: 0.1em;
   position: relative;
   transition: color 0.3s ease;
+  white-space: nowrap; /* Prevents wrapping */
 }
 
-.nav-link:hover {
-  color: #fff;
-}
+.nav-link:hover { color: #fff; }
 
-/* Red Dot Indicator */
 .nav-link::after {
   content: '';
   position: absolute;
-  bottom: -5px;
+  bottom: -6px;
   left: 50%;
   transform: translateX(-50%) scale(0);
   width: 4px;
   height: 4px;
   background: var(--color-brand);
   border-radius: 50%;
-  transition: transform 0.3s var(--ease-premium);
+  transition: transform 0.3s ease;
 }
-.nav-link:hover::after {
-  transform: translateX(-50%) scale(1);
-}
+.nav-link:hover::after { transform: translateX(-50%) scale(1); }
 
-/* Timer / Right Side Utility (Right) */
-nav .timer, nav .right-content {
+/* Column 3: Timer (Align Right) */
+nav .timer, 
+nav > div:last-child {
+  justify-self: end;
   font-family: var(--font-mono);
   color: var(--color-brand);
   font-weight: 600;
-  z-index: 20;
 }
 
-/* ── 4. LAYOUT & SECTIONS ── */
+/* ── 4. LAYOUT ── */
 section {
   max-width: 85rem;
   margin: 0 auto;
   padding: 8rem 2rem;
-  position: relative;
 }
 
 .section-label {
@@ -175,9 +173,8 @@ section {
   margin-bottom: 3rem;
 }
 
-/* ── 5. TECH STACK (Small & Clean) ── */
-.tech-stack-container, 
-.tech-stack {
+/* ── 5. TECH STACK ── */
+.tech-stack-container, .tech-stack {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -188,22 +185,19 @@ section {
   border: 1px solid var(--color-border);
   border-radius: 100px;
   width: fit-content;
-  backdrop-filter: blur(5px);
 }
 
-.tech-stack img, 
-.tech-stack svg {
-  height: 1.5rem !important; /* 24px Fixed */
+.tech-stack img, .tech-stack svg {
+  height: 1.5rem !important; 
   width: auto !important;
   object-fit: contain;
   filter: grayscale(100%) opacity(0.5);
   transition: all 0.4s var(--ease-premium);
 }
 
-.tech-stack img:hover, 
-.tech-stack svg:hover {
+.tech-stack img:hover, .tech-stack svg:hover {
   filter: grayscale(0%) opacity(1);
-  transform: translateY(-3px) scale(1.1);
+  transform: translateY(-3px);
 }
 
 /* ── 6. CARDS ── */
@@ -228,24 +222,32 @@ section {
   transform: translateY(-5px);
 }
 
-/* ── 7. CONTACT SECTION (High-End Spacing) ── */
-.contact-section {
+/* ── 7. CONTACT SECTION (FIXED SPACING) ── */
+/* Targeted broadly to ensure it catches your HTML structure */
+.contact-section, 
+footer, 
+#contact {
   text-align: center;
-  padding: 10rem 0;
+  padding: 8rem 0;
 }
 
+/* The Container for icons */
 .contact-icons, 
-.social-links {
-  display: flex;
+.social-links, 
+.footer-links,
+div[class*="contact"] { /* Matches anything with 'contact' in class */
+  display: flex !important;
   justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
   
-  /* HUGE GAP - The Luxury Factor */
-  gap: 6rem; /* ~100px spacing */
+  /* FORCE HUGE GAP */
+  gap: 5rem !important; /* ~80px spacing. If this doesn't work, nothing will. */
   
   margin-top: 4rem;
 }
 
+/* The Links/Icons themselves */
 .contact-icons a, 
 .social-links a {
   display: flex;
@@ -259,20 +261,20 @@ section {
 .contact-icons svg, 
 .contact-icons img, 
 .social-links svg {
-  height: 2.25rem; /* Slightly larger for impact */
+  height: 2.25rem; 
   width: auto;
   fill: currentColor;
   transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-/* Hover: Icon Turns Red & Bounces */
+/* Hover Effects */
 .contact-icons a:hover, 
 .social-links a:hover {
   color: var(--color-brand);
 }
 
-.contact-icons a:hover svg,
+.contact-icons a:hover svg, 
 .social-links a:hover svg {
-  transform: scale(1.2) translateY(-5px);
+  transform: scale(1.25) translateY(-5px);
   filter: drop-shadow(0 0 15px var(--color-brand-glow));
 }
