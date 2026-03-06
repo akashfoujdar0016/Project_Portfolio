@@ -10,37 +10,51 @@
   --color-border: rgba(255, 255, 255, 0.06);
 }
 
-/* ── 2. BASE & ATMOSPHERE ── */
-* { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; background-color: var(--color-bg-deep); }
+/* ── 2. BASE RESET & ATMOSPHERE ── */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+}
+html {
+  scroll-behavior: smooth;
+  background-color: var(--color-bg-deep);
+}
 body {
-  background: var(--color-bg-deep);
+  background-color: var(--color-bg-deep);
   color: #a1a1aa;
   font-family: var(--font-inter);
   line-height: 1.7;
   overflow-x: hidden;
+  font-size: 16px;
 }
 
-/* Cinematic Grain */
+/* Cinematic Grain (Subtle) */
 body::before {
   content: '';
-  position: fixed; inset: 0; z-index: 9999; pointer-events: none; opacity: 0.04;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.03;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
   mix-blend-mode: overlay;
 }
 
-/* ── 3. NAVBAR (GUARANTEED CENTERING) ── */
+/* ── 3. NAVBAR (VIEWPORT-ANCHORED CENTERING) ── */
+/* This ignores ALL HTML structure and centers based on viewport */
 nav {
   position: fixed;
-  top: 0; left: 0; width: 100%; height: 80px;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 80px; /* Fixed height for consistent alignment */
   z-index: 1000;
   padding: 0 5%;
   
-  /* Critical: Makes this the positioning context for absolute children */
-  position: relative; 
-  
   display: flex;
-  justify-content: space-between; /* Logo left, Timer right */
+  justify-content: space-between; /* Logo Left | Timer Right */
   align-items: center;
   
   background: rgba(6, 6, 8, 0.9);
@@ -48,7 +62,7 @@ nav {
   border-bottom: 1px solid var(--color-border);
 }
 
-/* Logo (Left Aligned) */
+/* Logo (Left) */
 nav .logo {
   font-family: var(--font-space);
   font-weight: 700;
@@ -58,25 +72,27 @@ nav .logo {
   z-index: 20;
 }
 
-/* LINKS: ABSOLUTELY CENTERED IN NAVBAR */
+/* THE FIX: LINKS CENTERED RELATIVE TO VIEWPORT */
 nav ul, 
 nav .nav-links, 
 nav .links,
-nav > div[class*="link"] { /* Targets common link containers */
+nav > div:not(.logo):not(.timer) { /* Targets ANY non-logo/timer child */
   position: absolute;
-  left: 50%; /* 50% of navbar width */
-  top: 50%;  /* 50% of navbar height */
+  left: 50vw; /* 50% of viewport width */
+  top: 50%;   /* 50% of navbar height (40px) */
   transform: translate(-50%, -50%); /* Perfect center */
   
   display: flex;
   align-items: center;
   
-  /* LUXURY SPREAD: 6rem (96px) between items */
-  gap: 6rem !important; 
+  /* LUXURY SPREAD: 7rem (112px) between items */
+  gap: 7rem !important; 
   
   list-style: none;
-  margin: 0;
-  padding: 0;
+  margin: 0 !important;
+  padding: 0 !important;
+  width: auto !important; /* Critical: Remove width constraints */
+  max-width: none !important;
   z-index: 10;
 }
 
@@ -94,7 +110,7 @@ nav > div[class*="link"] { /* Targets common link containers */
 }
 .nav-link:hover { color: #fff; }
 
-/* Red Dot Indicator (Premium Touch) */
+/* Premium Red Dot Indicator */
 .nav-link::after {
   content: '';
   position: absolute;
@@ -108,7 +124,7 @@ nav > div[class*="link"] { /* Targets common link containers */
 }
 .nav-link:hover::after { transform: translateX(-50%) scale(1); }
 
-/* Timer (Right Aligned) */
+/* Timer (Right) */
 nav .timer {
   font-family: var(--font-mono);
   color: var(--color-brand);
@@ -124,7 +140,7 @@ section {
   position: relative;
 }
 
-/* Tech Stack */
+/* Tech Stack (Small Icons) */
 .tech-stack-container, .tech-stack {
   display: flex;
   flex-wrap: wrap;
@@ -156,7 +172,12 @@ section {
   border-radius: 16px;
   transition: all 0.5s ease;
 }
-.hack-card h3 { font-family: var(--font-space); color: #fff; font-size: 1.5rem; margin-bottom: 1rem; }
+.hack-card h3 {
+  font-family: var(--font-space);
+  color: #fff;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
 .hack-card:hover {
   border-color: rgba(255,0,51,0.3);
   transform: translateY(-5px);
@@ -172,7 +193,8 @@ section {
   margin-bottom: 2.5rem;
 }
 
-/* ── 5. CONTACT SECTION (FORCED SPACING) ── */
+/* ── 5. CONTACT SECTION (MARGIN BOMB) ── */
+/* This forces spacing REGARDLESS of gap/flex settings */
 .contact-section, footer, #contact {
   text-align: center;
   padding: 8rem 0;
@@ -188,25 +210,49 @@ section {
   flex-wrap: wrap;
   width: 100%;
   margin-top: 5rem;
+  position: relative; /* For pseudo-element */
 }
 
-/* THE FIX: Direct margin on children (bypasses gap issues) */
+/* THE NUCLEAR OPTION: Forced spacing via pseudo-element */
+.contact-icons::before,
+.social-links::before,
+.footer-links::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    transparent 20%,
+    var(--color-border) 20%,
+    var(--color-border) 80%,
+    transparent 80%,
+    transparent 100%
+  );
+  /* Creates 60% gap (40% taken by 3 items at 20% each) */
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Icon Styling */
 .contact-icons > *, 
 .social-links > *, 
 .footer-links > * {
-  /* 4rem left + 4rem right = 8rem (128px) TOTAL GAP */
-  margin-left: 4rem !important;
-  margin-right: 4rem !important;
-  
+  margin: 0 !important; /* Kill any inherited margins */
+  padding: 0 !important;
   display: flex;
   align-items: center;
   justify-content: center;
   text-decoration: none;
   color: #a1a1aa;
+  width: 60px; /* Fixed width for consistency */
+  height: 60px;
   transition: all 0.4s ease;
 }
 
-/* Icon Styling */
+/* Icons Inside Links */
 .contact-icons svg, 
 .contact-icons img {
   height: 2.5rem !important;
@@ -222,4 +268,12 @@ section {
 }
 .contact-icons > *:hover svg {
   filter: drop-shadow(0 0 12px rgba(255,0,51,0.4));
+  transform: scale(1.25);
 }
+
+/* ── 6. DEBUG OUTLINE (TEMPORARY - UNCOMMENT TO SEE) ── */
+/* 
+nav { outline: 2px solid lime; }
+nav ul { outline: 2px solid red; }
+.contact-icons { outline: 2px solid cyan; }
+*/
