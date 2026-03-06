@@ -3,7 +3,7 @@ export function Footer() {
     <footer
       className="relative py-5 px-6"
       style={{
-        marginTop: '16rem',
+        marginTop: '8rem',
         background: 'rgba(6, 8, 10, 0.97)',
         borderTop: '1px solid rgba(0, 255, 136, 0.12)',
       }}
