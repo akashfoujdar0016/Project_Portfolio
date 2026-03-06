@@ -5,14 +5,14 @@
   --font-inter: 'Inter', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
   
-  /* Premium Color Palette Extension */
+  /* Luxury Palette: Shifted slightly from pure black to 'Rich Obsidian' */
   --color-brand: #ff0033;
-  --color-brand-muted: rgba(255, 0, 51, 0.15);
-  --color-bg-deep: #050507;
-  --color-surface: rgba(15, 15, 20, 0.85);
+  --color-brand-muted: rgba(255, 0, 51, 0.1);
+  --color-bg-deep: #060608;
+  --color-border-subtle: rgba(255, 255, 255, 0.04);
 }
 
-/* ── Base Reset & Smoothness ── */
+/* ── Base Reset & Fluidity ── */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -26,157 +26,137 @@ html {
 
 body {
   background-color: var(--color-bg-deep);
-  color: #d1d1d6; /* Softer than pure silver for a pro look */
+  color: #a1a1aa; /* Professional zinc/silver for better readability */
   font-family: 'Inter', sans-serif;
   overflow-x: hidden;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
 }
 
-/* ── Premium CRT & Atmosphere ── */
-/* Added a subtle grain for texture */
+/* ── Sophisticated Atmosphere ── */
+/* Replaced generic scanlines with a high-end film grain texture */
 body::before {
   content: '';
   position: fixed;
   inset: 0;
-  z-index: 9998;
+  z-index: 9999;
   pointer-events: none;
-  background: repeating-linear-gradient(
-    0deg,
-    transparent 0px,
-    transparent 1px,
-    rgba(255, 255, 255, 0.015) 1px,
-    rgba(255, 255, 255, 0.015) 2px
-  );
+  opacity: 0.25;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 }
 
-/* Improved Vignette with a "Glow" from the center */
-body::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  z-index: 9997;
-  pointer-events: none;
-  background: 
-    radial-gradient(circle at 50% 50%, rgba(255, 0, 51, 0.03) 0%, transparent 70%),
-    radial-gradient(circle at center, transparent 30%, rgba(0, 0, 0, 0.8) 100%);
-}
-
-/* ── Modern Scrollbar ── */
-::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-track { background: #0a0a0c; }
-::-webkit-scrollbar-thumb {
-  background: linear-gradient(to bottom, #440000, #ff0033);
-  border-radius: 10px;
-}
-
-/* ── Typography & Sections ── */
+/* ── Typography Refinement ── */
 section {
-  max-width: 85rem; /* Slightly wider for modern ultrawide screens */
+  max-width: 90rem; /* Wider layout for a "premium" expansive feel */
   margin: 0 auto;
-  padding: 8rem 2rem;
+  padding: 10rem 2rem;
   position: relative;
 }
 
 .section-label {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.7rem;
-  font-weight: 800;
-  letter-spacing: 0.5em; /* Extreme tracking = Luxury */
-  color: #ff0033;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.4em;
+  color: var(--color-brand);
   text-transform: uppercase;
-  margin-bottom: 1rem;
-  display: block;
-  opacity: 0.9;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Small aesthetic dash for the section label */
+.section-label::before {
+  content: '';
+  width: 20px;
+  height: 1px;
+  background: var(--color-brand);
+  opacity: 0.5;
 }
 
 .section-title {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: clamp(2.5rem, 5vw, 4rem); /* Bolder hierarchy */
+  font-size: clamp(2.5rem, 8vw, 5rem); /* Larger, bolder typography */
   font-weight: 700;
   color: #ffffff;
-  line-height: 1.1;
-  letter-spacing: -0.03em;
-  margin-bottom: 2rem;
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  margin-bottom: 3rem;
 }
 
-/* ── The "Section Shell" (The $5k Look) ── */
+/* ── The "Section Shell" (Refined Glassmorphism) ── */
 .section-shell {
-  background: linear-gradient(
-    145deg, 
-    rgba(20, 20, 25, 0.9) 0%, 
-    rgba(10, 10, 12, 0.95) 100%
-  );
-  backdrop-filter: blur(12px); /* High-end glassmorphism */
-  border: 1px solid rgba(255, 0, 51, 0.2);
-  padding: 4rem;
-  border-radius: 4px;
+  background: rgba(15, 15, 18, 0.6);
+  backdrop-filter: blur(25px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 5rem;
+  border-radius: 12px;
   box-shadow: 
-    0 20px 50px rgba(0,0,0,0.5),
-    0 0 30px rgba(255, 0, 51, 0.05);
-  transition: all 0.5s cubic-bezier(0.2, 1, 0.3, 1);
+    0 30px 60px -12px rgba(0,0,0,0.5),
+    inset 0 1px 1px rgba(255,255,255,0.05);
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .section-shell:hover {
-  border-color: rgba(255, 0, 51, 0.5);
-  box-shadow: 
-    0 30px 70px rgba(0,0,0,0.7),
-    0 0 50px rgba(255, 0, 51, 0.15);
-  transform: translateY(-8px) scale(1.01);
+  border-color: rgba(255, 0, 51, 0.2);
+  transform: translateY(-5px);
+  box-shadow: 0 40px 80px -15px rgba(0,0,0,0.6);
 }
 
 /* ── Professional Cards ── */
 .hack-card {
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-left: 2px solid #ff0033; /* Accent edge */
-  padding: 2rem;
+  background: rgba(255, 255, 255, 0.01);
+  border: 1px solid var(--color-border-subtle);
+  padding: 3rem;
+  border-radius: 8px;
   transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.hack-card::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; width: 2px; height: 0;
+  background: var(--color-brand);
+  transition: height 0.4s ease;
 }
 
 .hack-card:hover {
-  background: rgba(255, 0, 51, 0.03);
-  border-color: rgba(255, 0, 51, 0.3);
-  transform: translateX(10px); /* Side-slide interaction */
+  background: rgba(255, 255, 255, 0.02);
+  border-color: rgba(255, 0, 51, 0.2);
+  transform: scale(1.02);
 }
 
-/* ── Interactive Navigation ── */
+.hack-card:hover::after {
+  height: 100%;
+}
+
+/* ── Navigation ── */
 .nav-link {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.2em;
-  color: #888;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #71717a;
+  text-decoration: none;
   transition: all 0.3s ease;
-  padding: 0.5rem 1rem;
-  border: 1px solid transparent;
+  padding: 0.5rem 0;
+  position: relative;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; width: 0; height: 1px;
+  background: var(--color-brand);
+  transition: width 0.3s ease;
 }
 
 .nav-link:hover {
   color: #fff;
-  background: rgba(255, 0, 51, 0.1);
-  border-color: rgba(255, 0, 51, 0.2);
-  text-shadow: 0 0 10px rgba(255,0,0,0.5);
 }
 
-/* ── Subtle Glitch (Refined) ── */
-.glitch {
-  position: relative;
-  display: inline-block;
-}
-
-.glitch:hover::before {
-  content: attr(data-text);
-  position: absolute;
-  left: 2px;
-  text-shadow: -2px 0 #ff0033;
-  background: var(--color-bg-deep);
-  overflow: hidden;
-  clip: rect(0, 900px, 0, 0);
-  animation: noise-anim 2s infinite linear alternate-reverse;
-}
-
-@keyframes noise-anim {
-  0% { clip: rect(10px, 9999px, 50px, 0); }
-  100% { clip: rect(80px, 9999px, 100px, 0); }
+.nav-link:hover::after {
+  width: 100%;
 }
