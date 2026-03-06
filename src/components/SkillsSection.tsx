@@ -15,7 +15,7 @@ export function SkillsSection() {
       <div className="w-full section-fade" style={{ maxWidth: '1400px', marginLeft: 'auto', marginRight: 'auto' }}>
         <div className="px-6 md:px-14 pt-16 pb-24 md:pt-20 md:pb-32">
           {/* Section header */}
-          <div className="mb-10">
+          <div className="mb-16 md:mb-20">
             <h2 className="font-space text-2xl md:text-3xl font-bold text-white tracking-wider flex items-center gap-4">
               TECH STACK
               <div className="h-[1px] flex-1 bg-gradient-to-r from-[#ff0033]/40 to-transparent" />
