@@ -5,18 +5,26 @@
   --font-inter: 'Inter', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
   
-  /* Luxury Palette: Shifted slightly from pure black to 'Rich Obsidian' */
+  /* ── Preserved Theme ── */
   --color-brand: #ff0033;
-  --color-brand-muted: rgba(255, 0, 51, 0.1);
+  --color-brand-muted: rgba(255, 0, 51, 0.08); /* Lower opacity for subtlety */
   --color-bg-deep: #060608;
-  --color-border-subtle: rgba(255, 255, 255, 0.04);
+  --color-text-main: #e4e4e7; /* Zinc-200 for better contrast than generic gray */
+  --color-text-muted: #a1a1aa;
+  
+  /* ── The "Expensive" Easing Curve ── */
+  --ease-premium: cubic-bezier(0.16, 1, 0.3, 1); /* Snappy start, slow smooth finish */
 }
 
-/* ── Base Reset & Fluidity ── */
+/* ── Base Reset & High-End Defaults ── */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  /* Premium rendering settings */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 html {
@@ -26,137 +34,232 @@ html {
 
 body {
   background-color: var(--color-bg-deep);
-  color: #a1a1aa; /* Professional zinc/silver for better readability */
-  font-family: 'Inter', sans-serif;
+  color: var(--color-text-muted);
+  font-family: var(--font-inter);
   overflow-x: hidden;
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
+  line-height: 1.75; /* Increased from 1.6 for readability */
+  font-size: 1.05rem; /* Slightly larger base size */
+}
+
+/* Custom Scrollbar (Essential for premium feel) */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg-deep);
+}
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-brand);
+}
+
+/* High-contrast selection */
+::selection {
+  background: var(--color-brand);
+  color: #ffffff;
 }
 
 /* ── Sophisticated Atmosphere ── */
-/* Replaced generic scanlines with a high-end film grain texture */
+
+/* 1. Refined Grain: Lower opacity makes it subconscious, not dirty */
 body::before {
   content: '';
   position: fixed;
   inset: 0;
   z-index: 9999;
   pointer-events: none;
-  opacity: 0.25;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.035; /* Drastically reduced from 0.25 */
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}
+
+/* 2. Ambient Lighting: A subtle top-light to create depth */
+body::after {
+  content: '';
+  position: absolute;
+  top: -10vh;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80vw;
+  height: 50vh;
+  background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, rgba(6,6,8,0) 70%);
+  pointer-events: none;
+  z-index: -1;
 }
 
 /* ── Typography Refinement ── */
 section {
-  max-width: 90rem; /* Wider layout for a "premium" expansive feel */
+  max-width: 85rem; /* Slightly tighter for better reading lines */
   margin: 0 auto;
-  padding: 10rem 2rem;
+  padding: 12rem 2rem; /* More vertical breathing room */
   position: relative;
 }
 
 .section-label {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.4em;
+  font-family: var(--font-mono);
+  font-size: 0.75rem; /* Slightly larger */
+  font-weight: 500;
+  letter-spacing: 0.2em; /* Reduced spacing for tighter lockup */
   color: var(--color-brand);
   text-transform: uppercase;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 1.5rem;
+  opacity: 0.9;
 }
 
-/* Small aesthetic dash for the section label */
+/* Replaced the "dash" with a more technical indicator */
 .section-label::before {
   content: '';
-  width: 20px;
-  height: 1px;
+  width: 6px;
+  height: 6px;
   background: var(--color-brand);
-  opacity: 0.5;
+  box-shadow: 0 0 10px var(--color-brand);
 }
 
 .section-title {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: clamp(2.5rem, 8vw, 5rem); /* Larger, bolder typography */
-  font-weight: 700;
+  font-family: var(--font-space);
+  /* Uses clamp for fluid typography */
+  font-size: clamp(3rem, 6vw, 5.5rem); 
+  font-weight: 600; /* Dropped from 700 for a cleaner look */
   color: #ffffff;
-  line-height: 0.95;
-  letter-spacing: -0.04em;
-  margin-bottom: 3rem;
+  line-height: 1.1;
+  letter-spacing: -0.04em; /* Negative tracking is key for "Expensive" headers */
+  margin-bottom: 4rem;
+  max-width: 20ch; /* Limits width for readability */
 }
 
-/* ── The "Section Shell" (Refined Glassmorphism) ── */
+/* ── The "Section Shell" (Premium Glass) ── */
+/* Logic: Uses multiple shadows to create physical depth */
 .section-shell {
-  background: rgba(15, 15, 18, 0.6);
-  backdrop-filter: blur(25px) saturate(150%);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  padding: 5rem;
-  border-radius: 12px;
+  background: linear-gradient(180deg, rgba(20, 20, 24, 0.6) 0%, rgba(20, 20, 24, 0.3) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  /* Top border is brighter (light source), bottom is dark */
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+  border-left: 1px solid rgba(255, 255, 255, 0.03);
+  border-right: 1px solid rgba(255, 255, 255, 0.03);
+  
+  padding: 6rem;
+  border-radius: 24px; /* Modern rounded corners */
+  
+  /* Deep, layered shadow */
   box-shadow: 
-    0 30px 60px -12px rgba(0,0,0,0.5),
-    inset 0 1px 1px rgba(255,255,255,0.05);
-  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    0 40px 80px -20px rgba(0,0,0,0.8),
+    inset 0 0 0 1px rgba(255,255,255,0.02);
+    
+  transition: transform 0.8s var(--ease-premium), box-shadow 0.8s var(--ease-premium), border-color 0.4s ease;
+  will-change: transform;
 }
 
 .section-shell:hover {
-  border-color: rgba(255, 0, 51, 0.2);
-  transform: translateY(-5px);
-  box-shadow: 0 40px 80px -15px rgba(0,0,0,0.6);
+  border-top-color: rgba(255, 255, 255, 0.15);
+  transform: translateY(-4px) scale(1.002);
+  box-shadow: 
+    0 50px 100px -20px rgba(0,0,0,0.9),
+    inset 0 0 20px rgba(255,255,255,0.02);
 }
 
-/* ── Professional Cards ── */
+/* ── Professional Cards (Bento Grid Style) ── */
 .hack-card {
-  background: rgba(255, 255, 255, 0.01);
-  border: 1px solid var(--color-border-subtle);
-  padding: 3rem;
-  border-radius: 8px;
-  transition: all 0.4s ease;
+  /* Gradient background instead of flat color */
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.005) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 3.5rem;
+  border-radius: 16px;
   position: relative;
   overflow: hidden;
+  transition: all 0.5s var(--ease-premium);
+  cursor: pointer;
+  group: hack-card;
 }
 
-.hack-card::after {
+/* Title inside card upgrade */
+.hack-card h3 {
+    color: #fff;
+    font-family: var(--font-space);
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    transition: color 0.3s ease;
+}
+
+.hack-card p {
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+    transition: color 0.3s ease;
+}
+
+/* The hover accent is now a subtle wash, not just a border */
+.hack-card::before {
   content: '';
   position: absolute;
-  top: 0; left: 0; width: 2px; height: 0;
-  background: var(--color-brand);
-  transition: height 0.4s ease;
+  inset: 0;
+  background: radial-gradient(800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 0, 51, 0.06), transparent 40%);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  z-index: 0;
 }
 
 .hack-card:hover {
-  background: rgba(255, 255, 255, 0.02);
-  border-color: rgba(255, 0, 51, 0.2);
-  transform: scale(1.02);
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-4px);
 }
 
-.hack-card:hover::after {
-  height: 100%;
+.hack-card:hover h3 {
+    color: var(--color-brand);
+}
+.hack-card:hover p {
+    color: var(--color-text-main);
 }
 
-/* ── Navigation ── */
+.hack-card:hover::before {
+  opacity: 1;
+}
+
+/* ── Navigation (Minimalist) ── */
+nav {
+    display: flex;
+    gap: 3rem;
+    padding: 2rem 0;
+}
+
 .nav-link {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.8rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
   font-weight: 500;
   color: #71717a;
   text-decoration: none;
-  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: color 0.4s ease;
   padding: 0.5rem 0;
   position: relative;
 }
 
-.nav-link::after {
+/* Dot indicator instead of underline (More modern) */
+.nav-link::before {
   content: '';
   position: absolute;
-  bottom: 0; left: 0; width: 0; height: 1px;
+  top: 50%;
+  left: -12px;
+  transform: translateY(-50%) scale(0);
+  width: 4px;
+  height: 4px;
   background: var(--color-brand);
-  transition: width 0.3s ease;
+  border-radius: 50%;
+  transition: transform 0.4s var(--ease-premium);
 }
 
 .nav-link:hover {
   color: #fff;
 }
 
-.nav-link:hover::after {
-  width: 100%;
+.nav-link:hover::before {
+  transform: translateY(-50%) scale(1);
 }
