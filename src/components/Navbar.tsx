@@ -73,16 +73,24 @@ export function Navbar({ activeSection }: NavbarProps) {
           )}
         </button>
 
-        <button
-          type="button"
-          className="hidden md:flex items-center gap-2 text-[#ff0033] font-mono text-xs tracking-[0.2em] absolute right-6 group"
+        {/* Right-corner timer */}
+        <div
+          className="hidden md:flex items-center gap-2 absolute right-6"
           aria-label="Current time"
+          style={{
+            fontFamily: "'JetBrains Mono', monospace",
+            fontSize: '0.72rem',
+            letterSpacing: '0.16em',
+            color: 'rgba(0, 255, 136, 0.7)',
+            textShadow: '0 0 8px rgba(0, 255, 136, 0.3)',
+          }}
         >
-          <Clock className="w-4 h-4 transition duration-200 group-hover:text-[#ff3355] group-hover:drop-shadow-[0_0_10px_rgba(255,0,51,0.7)]" />
-          <span className="transition duration-200 group-hover:text-[#ff3355] group-hover:drop-shadow-[0_0_10px_rgba(255,0,51,0.7)]">
-            {currentTime || '00:00:00'}
-          </span>
-        </button>
+          <Clock
+            className="w-3.5 h-3.5"
+            style={{ color: 'rgba(0, 255, 136, 0.6)' }}
+          />
+          <span>{currentTime || '00:00:00'}</span>
+        </div>
       </div>
 
       {/* Mobile menu */}
