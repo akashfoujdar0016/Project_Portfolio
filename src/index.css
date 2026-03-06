@@ -1,390 +1,182 @@
 @import "tailwindcss";
 
-/* portfolio */
-
 @theme {
   --font-space: 'Space Grotesk', sans-serif;
   --font-inter: 'Inter', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
+  
+  /* Premium Color Palette Extension */
+  --color-brand: #ff0033;
+  --color-brand-muted: rgba(255, 0, 51, 0.15);
+  --color-bg-deep: #050507;
+  --color-surface: rgba(15, 15, 20, 0.85);
 }
 
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
+/* ── Base Reset & Smoothness ── */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-html{
-  scroll-behavior:smooth;
+html {
+  scroll-behavior: smooth;
+  background-color: var(--color-bg-deep);
 }
 
-body{
-  background-color:#030305;
-  color:#c0c0c0;
-  font-family:'Inter',sans-serif;
-  overflow-x:hidden;
-  line-height:1.7;
+body {
+  background-color: var(--color-bg-deep);
+  color: #d1d1d6; /* Softer than pure silver for a pro look */
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* ── CRT scanlines overlay ── */
-
-body::before{
-  content:'';
-  position:fixed;
-  inset:0;
-  z-index:9998;
-  pointer-events:none;
-
-  background:repeating-linear-gradient(
+/* ── Premium CRT & Atmosphere ── */
+/* Added a subtle grain for texture */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  pointer-events: none;
+  background: repeating-linear-gradient(
     0deg,
-    transparent,
-    transparent 2px,
-    rgba(0,0,0,0.08) 2px,
-    rgba(0,0,0,0.08) 4px
+    transparent 0px,
+    transparent 1px,
+    rgba(255, 255, 255, 0.015) 1px,
+    rgba(255, 255, 255, 0.015) 2px
   );
 }
 
-/* ── CRT vignette ── */
+/* Improved Vignette with a "Glow" from the center */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9997;
+  pointer-events: none;
+  background: 
+    radial-gradient(circle at 50% 50%, rgba(255, 0, 51, 0.03) 0%, transparent 70%),
+    radial-gradient(circle at center, transparent 30%, rgba(0, 0, 0, 0.8) 100%);
+}
 
-body::after{
-  content:'';
-  position:fixed;
-  inset:0;
-  z-index:9997;
-  pointer-events:none;
+/* ── Modern Scrollbar ── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: #0a0a0c; }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #440000, #ff0033);
+  border-radius: 10px;
+}
 
-  background:radial-gradient(
-    ellipse at center,
-    transparent 55%,
-    rgba(0,0,0,0.72) 100%
+/* ── Typography & Sections ── */
+section {
+  max-width: 85rem; /* Slightly wider for modern ultrawide screens */
+  margin: 0 auto;
+  padding: 8rem 2rem;
+  position: relative;
+}
+
+.section-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.5em; /* Extreme tracking = Luxury */
+  color: #ff0033;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  display: block;
+  opacity: 0.9;
+}
+
+.section-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(2.5rem, 5vw, 4rem); /* Bolder hierarchy */
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  margin-bottom: 2rem;
+}
+
+/* ── The "Section Shell" (The $5k Look) ── */
+.section-shell {
+  background: linear-gradient(
+    145deg, 
+    rgba(20, 20, 25, 0.9) 0%, 
+    rgba(10, 10, 12, 0.95) 100%
   );
+  backdrop-filter: blur(12px); /* High-end glassmorphism */
+  border: 1px solid rgba(255, 0, 51, 0.2);
+  padding: 4rem;
+  border-radius: 4px;
+  box-shadow: 
+    0 20px 50px rgba(0,0,0,0.5),
+    0 0 30px rgba(255, 0, 51, 0.05);
+  transition: all 0.5s cubic-bezier(0.2, 1, 0.3, 1);
 }
 
-/* ── Scrollbar ── */
-
-::-webkit-scrollbar{
-  width:3px;
+.section-shell:hover {
+  border-color: rgba(255, 0, 51, 0.5);
+  box-shadow: 
+    0 30px 70px rgba(0,0,0,0.7),
+    0 0 50px rgba(255, 0, 51, 0.15);
+  transform: translateY(-8px) scale(1.01);
 }
 
-::-webkit-scrollbar-track{
-  background:#030305;
+/* ── Professional Cards ── */
+.hack-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-left: 2px solid #ff0033; /* Accent edge */
+  padding: 2rem;
+  transition: all 0.4s ease;
 }
 
-::-webkit-scrollbar-thumb{
-  background:#cc0020;
+.hack-card:hover {
+  background: rgba(255, 0, 51, 0.03);
+  border-color: rgba(255, 0, 51, 0.3);
+  transform: translateX(10px); /* Side-slide interaction */
 }
 
-::-webkit-scrollbar-thumb:hover{
-  background:#ff0033;
+/* ── Interactive Navigation ── */
+.nav-link {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: #888;
+  transition: all 0.3s ease;
+  padding: 0.5rem 1rem;
+  border: 1px solid transparent;
 }
 
-/* ── SECTION LAYOUT (REPLACES CONTAINER) ── */
-
-section{
-  max-width:80rem;
-  margin-left:auto;
-  margin-right:auto;
-
-  padding-top:6rem;
-  padding-bottom:6rem;
-  padding-left:1.8rem;
-  padding-right:1.8rem;
-
-  position:relative;
+.nav-link:hover {
+  color: #fff;
+  background: rgba(255, 0, 51, 0.1);
+  border-color: rgba(255, 0, 51, 0.2);
+  text-shadow: 0 0 10px rgba(255,0,0,0.5);
 }
 
-/* spacing between sections */
-
-section + section{
-  margin-top:3rem;
+/* ── Subtle Glitch (Refined) ── */
+.glitch {
+  position: relative;
+  display: inline-block;
 }
 
-/* section header */
-
-.section-header{
-  margin-bottom:2rem;
+.glitch:hover::before {
+  content: attr(data-text);
+  position: absolute;
+  left: 2px;
+  text-shadow: -2px 0 #ff0033;
+  background: var(--color-bg-deep);
+  overflow: hidden;
+  clip: rect(0, 900px, 0, 0);
+  animation: noise-anim 2s infinite linear alternate-reverse;
 }
 
-/* section title */
-
-.section-title{
-  font-family:'Space Grotesk',sans-serif;
-  font-size:clamp(1.6rem,3vw,2.4rem);
-  letter-spacing:0.02em;
-  margin-top:.4rem;
-}
-
-/* section paragraph spacing */
-
-section p{
-  margin-bottom:1.4rem;
-}
-
-section p:last-child{
-  margin-bottom:0;
-}
-
-/* ── Section fade ── */
-
-.section-fade{
-  opacity:0;
-  transform:translateY(24px);
-  transition:opacity .7s ease,transform .7s ease;
-}
-
-.section-fade.visible{
-  opacity:1;
-  transform:translateY(0);
-}
-
-/* ── Typing cursor ── */
-
-.cursor-blink{
-  animation:blink .8s step-end infinite;
-}
-
-@keyframes blink{
-
-  0%,100%{
-    opacity:1;
-  }
-
-  50%{
-    opacity:0;
-  }
-}
-
-/* ── Glitch animation ── */
-
-.glitch{
-  position:relative;
-  animation:glitchMain 5s infinite;
-}
-
-.glitch::before,
-.glitch::after{
-  content:attr(data-text);
-  position:absolute;
-  top:0;
-  left:0;
-  width:100%;
-}
-
-.glitch::before{
-  color:#ff0033;
-
-  animation:glitchTop 5s infinite;
-
-  clip-path:polygon(0 0,100% 0,100% 35%,0 35%);
-
-  transform:translate(-2px,0);
-}
-
-.glitch::after{
-  color:#990000;
-
-  animation:glitchBot 5s infinite;
-
-  clip-path:polygon(0 60%,100% 60%,100% 100%,0 100%);
-
-  transform:translate(2px,0);
-}
-
-@keyframes glitchMain{
-
-  0%,90%,100%{
-    transform:translate(0);
-  }
-
-  91%{
-    transform:translate(-1px,1px);
-  }
-
-  92%{
-    transform:translate(1px,-1px);
-  }
-
-  93%{
-    transform:translate(0);
-  }
-}
-
-@keyframes glitchTop{
-
-  0%,88%,100%{
-    transform:translate(-2px,0);
-    opacity:0;
-  }
-
-  89%{
-    transform:translate(-3px,-1px);
-    opacity:.8;
-  }
-
-  90%{
-    transform:translate(2px,1px);
-    opacity:.6;
-  }
-
-  91%{
-    opacity:0;
-  }
-}
-
-@keyframes glitchBot{
-
-  0%,88%,100%{
-    transform:translate(2px,0);
-    opacity:0;
-  }
-
-  89%{
-    transform:translate(3px,1px);
-    opacity:.7;
-  }
-
-  90%{
-    transform:translate(-1px,-1px);
-    opacity:.5;
-  }
-
-  91%{
-    opacity:0;
-  }
-}
-
-/* ── Nav link ── */
-
-.nav-link{
-  position:relative;
-
-  font-family:'JetBrains Mono',monospace;
-  font-size:.85rem;
-  font-weight:600;
-
-  text-decoration:none;
-
-  color:rgba(180,180,180,.55);
-
-  letter-spacing:.16em;
-  text-transform:uppercase;
-
-  transition:color .25s ease,text-shadow .25s ease;
-
-  padding:4px 0;
-}
-
-.nav-link:focus-visible{
-  outline:1px dashed rgba(255,0,51,.6);
-  outline-offset:4px;
-}
-
-.nav-link:hover{
-  color:#ff5a6a;
-  text-shadow:0 0 12px rgba(255,0,51,.45);
-}
-
-/* ── Section label ── */
-
-.section-label{
-  font-family:'JetBrains Mono',monospace;
-
-  font-size:.62rem;
-  font-weight:700;
-
-  letter-spacing:.35em;
-
-  color:#ff0033;
-
-  text-transform:uppercase;
-
-  text-shadow:0 0 12px rgba(255,0,51,.6);
-}
-
-/* ── Red glow text ── */
-
-.red-glow{
-  color:#ff0033;
-
-  text-shadow:
-  0 0 20px rgba(255,0,51,.7),
-  0 0 40px rgba(255,0,51,.3);
-}
-
-/* ── Cards ── */
-
-.hack-card{
-
-  background:rgba(10,2,2,.85);
-
-  border:1px solid rgba(255,0,51,.12);
-
-  border-radius:2px;
-
-  padding:1.8rem;
-
-  transition:
-  border-color .3s,
-  box-shadow .3s,
-  transform .3s;
-}
-
-.hack-card:hover{
-
-  border-color:rgba(255,0,51,.35);
-
-  box-shadow:
-  0 0 25px rgba(255,0,51,.08),
-  0 8px 30px rgba(0,0,0,.6);
-
-  transform:translateY(-3px);
-}
-
-/* ── Section shell ── */
-
-.section-shell{
-
-  background:rgba(8,8,12,.55);
-
-  border:1px solid rgba(255,0,51,.35);
-
-  border-radius:2px;
-
-  padding:2.6rem;
-
-  line-height:1.8;
-
-  box-shadow:
-  0 0 55px rgba(255,0,51,.22),
-  0 24px 80px rgba(0,0,0,.7);
-
-  transition:all .35s ease;
-}
-
-.section-shell:hover{
-
-  border-color:rgba(255,0,51,.65);
-
-  box-shadow:
-  0 0 120px rgba(255,0,51,.35),
-  0 40px 120px rgba(0,0,0,.82);
-
-  transform:translateY(-4px);
-}
-
-/* ── Work section layout ── */
-
-.work-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-start;
-
-  margin-bottom:.8rem;
-
-  flex-wrap:wrap;
-  gap:.5rem;
-}
-
-.work-role{
-  margin-bottom:.8rem;
+@keyframes noise-anim {
+  0% { clip: rect(10px, 9999px, 50px, 0); }
+  100% { clip: rect(80px, 9999px, 100px, 0); }
 }
