@@ -1,95 +1,171 @@
-/* ── GLOBAL LIGHTING (New: Makes the page pop) ── */
+I apologize. That likely happened because the "lighting" and "physics" effects clashed with your existing HTML structure, causing elements to overlap or disappear behind background layers.
+
+Here is a **Stable, Safe, and Polished** version.
+
+**Instructions:**
+1.  **Delete** all the previous CSS I gave you.
+2.  **Paste** this exact block below.
+3.  This code is "defensive"—it forces images to be small (preventing layout breaks), ensures text is readable, and removes the risky background overlaps while keeping the $6,000 premium aesthetic.
+
+```css
+@import "tailwindcss";
+
+/* ── SAFE & PREMIUM THEME CONFIGURATION ── */
+:root {
+  /* Fonts */
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  
+  /* Colors */
+  --color-brand: #ff0033;
+  --color-brand-glow: rgba(255, 0, 51, 0.3);
+  --color-bg: #050507;     /* Deepest Black/Blue */
+  --color-surface: #0f0f12; /* Slightly lighter for cards */
+  --color-text-main: #ededef;
+  --color-text-muted: #a1a1aa;
+  --color-border: rgba(255, 255, 255, 0.08);
+}
+
+/* ── RESET & STRUCTURE (Fixes layout breaking) ── */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  background-color: var(--color-bg);
+  color: var(--color-text-main);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  overflow-x: hidden; /* Prevents horizontal scrollbars */
+  width: 100%;
+}
+
+/* ── SUBTLE BACKGROUND (No layout interference) ── */
 body {
-  /* ... keep your existing body styles ... */
-  
-  /* This creates a "Stage Light" effect, darker edges, brighter center */
-  background: radial-gradient(
-    circle at 50% 0%, 
-    rgba(20, 20, 25, 1) 0%, 
-    var(--color-bg-deep) 60%
-  );
+  /* Simple radial gradient that stays in the back */
+  background-image: radial-gradient(circle at 50% 0%, #1a1a20 0%, var(--color-bg) 60%);
+  min-height: 100vh;
 }
 
-/* ── TECH STACK (Refined, Small, Professional) ── */
-.tech-stack-container {
+/* ── LAYOUT CONTAINER ── */
+/* This centers your content and prevents it from hitting edges */
+section, .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 4rem 1.5rem;
+  position: relative;
+  z-index: 10; /* Ensures content sits ABOVE background */
+}
+
+/* ── TYPOGRAPHY (Clean & Expensive) ── */
+h1, h2, h3, .title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: -0.03em; /* Tight spacing = Modern */
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+}
+
+h1 { font-size: clamp(2.5rem, 5vw, 4rem); }
+h2 { font-size: clamp(2rem, 4vw, 3rem); }
+
+p {
+  color: var(--color-text-muted);
+  font-size: 1.05rem;
+  max-width: 65ch; /* Optimal reading width */
+  margin-bottom: 2rem;
+}
+
+/* ── TECH STACK FIX (Small, Uniform Icons) ── */
+/* This forces ALL images in your tech stack area to behave */
+.tech-stack, 
+.logos, 
+div[class*="stack"] {
   display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
   align-items: center;
-  gap: 2.5rem; /* Generous spacing between small icons */
-  margin-top: 3rem;
-  padding: 1.5rem 3rem;
+  margin-top: 2rem;
+  padding: 1.5rem;
   
-  /* A distinct "Glass Pill" container for the stack */
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 9999px; /* Pill shape */
+  /* The Container Look */
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
   width: fit-content;
-  backdrop-filter: blur(10px);
 }
 
-/* Target your images or SVGs inside the tech stack */
-.tech-stack-container img, 
-.tech-stack-container svg {
-  height: 1.5rem; /* Approximately 24px - Very sleek/small */
-  width: auto;
-  object-fit: contain;
+/* FORCE images to be small and uniform */
+.tech-stack img, 
+.tech-stack svg,
+div[class*="stack"] img,
+div[class*="stack"] svg {
+  height: 24px !important;  /* Enforces small size */
+  width: auto !important;   /* Maintains aspect ratio */
+  max-width: 100%;
   
-  /* The "Stealth" Look: Grayscale and dimmed by default */
-  filter: grayscale(100%) brightness(0.7);
-  opacity: 0.6;
-  
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  cursor: help; /* Adds a nice cursor on hover */
+  /* Styling */
+  filter: grayscale(100%) opacity(0.6);
+  transition: all 0.3s ease;
+  cursor: pointer;
 }
 
-/* Hover Effects: The icon lights up */
-.tech-stack-container img:hover,
-.tech-stack-container svg:hover {
-  filter: grayscale(0%) brightness(1.2); /* Full color + slightly bright */
-  opacity: 1;
-  transform: translateY(-2px) scale(1.1); /* Subtle lift */
+/* Hover effect */
+.tech-stack img:hover, 
+.tech-stack svg:hover,
+div[class*="stack"] img:hover,
+div[class*="stack"] svg:hover {
+  filter: grayscale(0%) opacity(1);
+  transform: scale(1.1);
 }
 
-/* ── ATTRACTION UPGRADES (Visual Polish) ── */
-
-/* 1. Glowing Text for Main Title */
-.section-title {
-  /* ... keep existing styles ... */
-  text-shadow: 0 0 40px rgba(255, 255, 255, 0.1); /* Soft bloom */
+/* ── UI CARDS (Glassmorphism that works) ── */
+.card, .project-card, .hack-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  padding: 2.5rem;
+  border-radius: 12px;
+  transition: transform 0.3s ease, border-color 0.3s ease;
 }
 
-/* 2. Better Button/Link Call to Action */
-.cta-button {
+.card:hover, .project-card:hover, .hack-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* ── BUTTONS ── */
+button, .btn, a.button {
   display: inline-flex;
   align-items: center;
-  padding: 1rem 2rem;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
   background: transparent;
+  border: 1px solid var(--color-border);
   color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.2);
   font-family: var(--font-mono);
   font-size: 0.85rem;
-  letter-spacing: 0.1em;
   text-transform: uppercase;
-  transition: all 0.4s ease;
-  position: relative;
-  overflow: hidden;
+  letter-spacing: 0.05em;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  cursor: pointer;
 }
 
-.cta-button:hover {
+button:hover, .btn:hover, a.button:hover {
   border-color: var(--color-brand);
-  background: rgba(255, 0, 51, 0.05);
-  box-shadow: 0 0 30px var(--color-brand-muted);
+  background: rgba(255, 0, 51, 0.1);
+  color: white;
 }
+```
 
-/* 3. Subtle Grid Background (Optional but adds structure) */
-.section-shell::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image: 
-    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-  background-size: 40px 40px; /* Size of the grid squares */
-  opacity: 0.2;
-  z-index: -1;
-  mask-image: linear-gradient(to bottom, black 40%, transparent 100%); /* Fades out at bottom */
-}
+### What I fixed:
+
+1.  **Restored `z-index`:** I added `z-index: 10` to the section containers. This ensures your text and buttons are always clickable and sitting *on top* of any background effects.
+2.  **Forced Image Constraints:** In the `.tech-stack` section, I added `height: 24px !important`. This guarantees your icons will be small and sleek, even if the original image files are huge.
+3.  **Removed "Experimental" Physics:** I removed the complex `cubic-bezier` transitions and heavy blur filters that might have been causing lag or layout shifting on your browser.
+4.  **Color Safety:** Changed text colors to high-contrast variables so nothing blends into the background.
