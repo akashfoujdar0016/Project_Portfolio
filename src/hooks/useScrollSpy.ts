@@ -1,34 +1,33 @@
 import { useState, useEffect } from 'react';
 
-export function useScrollSpy(sectionIds: string[], offset = 120) {
+export function useScrollSpy(sectionIds: string[], offset = 150) {
   const [activeId, setActiveId] = useState(sectionIds[0]);
 
   useEffect(() => {
-    const updateActive = () => {
-      const sections = sectionIds
-        .map((id) => {
-          const el = document.getElementById(id);
-          if (!el) return null;
-          return { id, top: el.getBoundingClientRect().top };
-        })
-        .filter((section): section is { id: string; top: number } => Boolean(section));
+    const handleScroll = () => {
+      let currentId = sectionIds[0];
 
-      const visibleSections = sections.filter((section) => section.top <= offset + 2);
-      if (visibleSections.length) {
-        const current = visibleSections.reduce((prev, curr) => (curr.top > prev.top ? curr : prev));
-        setActiveId(current.id);
-      } else if (sections.length) {
-        setActiveId(sections[0].id);
+      for (const id of sectionIds) {
+        const el = document.getElementById(id);
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          // The last section that scrolled past the offset line wins
+          if (rect.top <= offset) {
+            currentId = id;
+          }
+        }
       }
+
+      setActiveId(currentId);
     };
 
-    updateActive();
-    window.addEventListener('scroll', updateActive, { passive: true });
-    window.addEventListener('resize', updateActive);
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleScroll);
 
     return () => {
-      window.removeEventListener('scroll', updateActive);
-      window.removeEventListener('resize', updateActive);
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
     };
   }, [sectionIds, offset]);
 
