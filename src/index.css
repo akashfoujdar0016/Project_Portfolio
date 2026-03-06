@@ -1,46 +1,46 @@
 @import "tailwindcss";
 
-/* ── 1. THEME DEFINITION ── */
+/* ── 1. THEME (Your Original Palette) ── */
 @theme {
   --font-space: 'Space Grotesk', sans-serif;
   --font-inter: 'Inter', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
-  --color-brand: #ff0033; 
-  --color-bg-deep: #060608; 
+  --color-brand: #ff0033;
+  --color-bg-deep: #060608;
   --color-border: rgba(255, 255, 255, 0.06);
 }
 
-/* ── 2. BASE RESET ── */
+/* ── 2. BASE & ATMOSPHERE ── */
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; background-color: var(--color-bg-deep); }
 body {
-  background-color: var(--color-bg-deep);
+  background: var(--color-bg-deep);
   color: #a1a1aa;
   font-family: var(--font-inter);
   line-height: 1.7;
   overflow-x: hidden;
-  font-size: 16px;
 }
 
-/* Texture */
+/* Cinematic Grain */
 body::before {
   content: '';
-  position: fixed; inset: 0; z-index: 9999; pointer-events: none; opacity: 0.04; 
+  position: fixed; inset: 0; z-index: 9999; pointer-events: none; opacity: 0.04;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
   mix-blend-mode: overlay;
 }
 
-/* ── 3. NAVBAR (SPREAD & CENTERED) ── */
+/* ── 3. NAVBAR (GUARANTEED CENTERING) ── */
 nav {
   position: fixed;
-  top: 0; left: 0;
-  width: 100%;
-  height: 90px;
+  top: 0; left: 0; width: 100%; height: 80px;
   z-index: 1000;
-  padding: 0 4%;
+  padding: 0 5%;
+  
+  /* Critical: Makes this the positioning context for absolute children */
+  position: relative; 
   
   display: flex;
-  justify-content: space-between; /* Logo Left, Timer Right */
+  justify-content: space-between; /* Logo left, Timer right */
   align-items: center;
   
   background: rgba(6, 6, 8, 0.9);
@@ -48,7 +48,7 @@ nav {
   border-bottom: 1px solid var(--color-border);
 }
 
-/* Logo */
+/* Logo (Left Aligned) */
 nav .logo {
   font-family: var(--font-space);
   font-weight: 700;
@@ -58,24 +58,29 @@ nav .logo {
   z-index: 20;
 }
 
-/* LINKS: Centered & Spread Out */
-nav ul, nav .nav-links, nav .links {
+/* LINKS: ABSOLUTELY CENTERED IN NAVBAR */
+nav ul, 
+nav .nav-links, 
+nav .links,
+nav > div[class*="link"] { /* Targets common link containers */
   position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%); /* Dead Center of Screen */
+  left: 50%; /* 50% of navbar width */
+  top: 50%;  /* 50% of navbar height */
+  transform: translate(-50%, -50%); /* Perfect center */
   
   display: flex;
   align-items: center;
   
-  /* SPREAD FACTOR: 5rem (80px) gap between items */
-  gap: 5rem !important; 
+  /* LUXURY SPREAD: 6rem (96px) between items */
+  gap: 6rem !important; 
   
   list-style: none;
-  margin: 0; padding: 0;
+  margin: 0;
+  padding: 0;
   z-index: 10;
 }
 
+/* Link Styling */
 .nav-link {
   font-family: var(--font-mono);
   font-size: 0.8rem;
@@ -83,22 +88,27 @@ nav ul, nav .nav-links, nav .links {
   color: #a1a1aa;
   text-decoration: none;
   text-transform: uppercase;
-  letter-spacing: 0.15em; /* Widen the letters too */
+  letter-spacing: 0.15em;
   transition: color 0.3s ease;
   white-space: nowrap;
 }
 .nav-link:hover { color: #fff; }
 
-/* Red Dot Indicator */
+/* Red Dot Indicator (Premium Touch) */
 .nav-link::after {
-  content: ''; position: absolute; bottom: -8px; left: 50%;
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
   transform: translateX(-50%) scale(0);
-  width: 4px; height: 4px; background: var(--color-brand); border-radius: 50%;
-  transition: 0.3s;
+  width: 4px; height: 4px;
+  background: var(--color-brand);
+  border-radius: 50%;
+  transition: transform 0.3s ease;
 }
 .nav-link:hover::after { transform: translateX(-50%) scale(1); }
 
-/* Timer */
+/* Timer (Right Aligned) */
 nav .timer {
   font-family: var(--font-mono);
   color: var(--color-brand);
@@ -106,45 +116,72 @@ nav .timer {
   z-index: 20;
 }
 
-/* ── 4. SECTIONS ── */
+/* ── 4. SECTIONS & COMPONENTS ── */
 section {
   max-width: 90rem;
   margin: 0 auto;
   padding: 10rem 2rem;
+  position: relative;
 }
 
 /* Tech Stack */
 .tech-stack-container, .tech-stack {
-  display: flex; flex-wrap: wrap; gap: 2.5rem;
-  margin-top: 3rem; padding: 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2.5rem;
+  margin-top: 3rem;
+  padding: 1.5rem;
   background: rgba(255, 255, 255, 0.02);
   border: 1px solid var(--color-border);
   border-radius: 100px;
   width: fit-content;
 }
 .tech-stack img, .tech-stack svg {
-  height: 1.5rem !important; width: auto !important;
-  filter: grayscale(100%) opacity(0.6); transition: 0.3s;
+  height: 1.5rem !important;
+  width: auto !important;
+  object-fit: contain;
+  filter: grayscale(100%) opacity(0.6);
+  transition: 0.4s;
 }
-.tech-stack img:hover { filter: none; transform: scale(1.1) translateY(-3px); }
+.tech-stack img:hover, .tech-stack svg:hover {
+  filter: none;
+  transform: translateY(-3px) scale(1.1);
+}
 
 /* Cards */
 .hack-card {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.02) 0%, transparent 100%);
+  background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, transparent 100%);
   border: 1px solid var(--color-border);
-  padding: 3rem; border-radius: 12px; transition: 0.4s;
+  padding: 3rem;
+  border-radius: 16px;
+  transition: all 0.5s ease;
 }
-.hack-card:hover { border-color: var(--color-brand); transform: translateY(-5px); }
-.section-title { font-family: var(--font-space); font-size: 4rem; color: #fff; margin-bottom: 2rem; }
+.hack-card h3 { font-family: var(--font-space); color: #fff; font-size: 1.5rem; margin-bottom: 1rem; }
+.hack-card:hover {
+  border-color: rgba(255,0,51,0.3);
+  transform: translateY(-5px);
+  background: rgba(255,255,255,0.05);
+}
+.section-title {
+  font-family: var(--font-space);
+  font-size: clamp(2.8rem, 6vw, 4.5rem);
+  font-weight: 600;
+  color: #fff;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  margin-bottom: 2.5rem;
+}
 
-/* ── 5. CONTACT SECTION (WIDE SPREAD) ── */
+/* ── 5. CONTACT SECTION (FORCED SPACING) ── */
 .contact-section, footer, #contact {
   text-align: center;
   padding: 8rem 0;
 }
 
 /* Container */
-.contact-icons, .social-links, .footer-links {
+.contact-icons, 
+.social-links, 
+.footer-links {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -153,24 +190,36 @@ section {
   margin-top: 5rem;
 }
 
-/* Items (Using Margin for spacing) */
+/* THE FIX: Direct margin on children (bypasses gap issues) */
 .contact-icons > *, 
 .social-links > *, 
 .footer-links > * {
-  /* 4rem left + 4rem right = 8rem (128px) total gap between icons */
+  /* 4rem left + 4rem right = 8rem (128px) TOTAL GAP */
   margin-left: 4rem !important;
   margin-right: 4rem !important;
   
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-decoration: none;
   color: #a1a1aa;
-  transition: 0.3s;
+  transition: all 0.4s ease;
 }
 
-/* Icons */
-.contact-icons svg, .contact-icons img {
-  height: 2.5rem; width: auto; 
-  transition: 0.3s;
+/* Icon Styling */
+.contact-icons svg, 
+.contact-icons img {
+  height: 2.5rem !important;
+  width: auto !important;
+  fill: currentColor;
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.contact-icons > *:hover { color: var(--color-brand); transform: translateY(-8px); }
-.contact-icons > *:hover svg { filter: drop-shadow(0 0 10px rgba(255, 0, 51, 0.4)); }
+/* Hover Effects */
+.contact-icons > *:hover {
+  color: var(--color-brand);
+  transform: translateY(-8px);
+}
+.contact-icons > *:hover svg {
+  filter: drop-shadow(0 0 12px rgba(255,0,51,0.4));
+}
