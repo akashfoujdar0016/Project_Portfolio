@@ -45,8 +45,34 @@ export function Navbar({ activeSection }: NavbarProps) {
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-[9999] backdrop-blur-md"
-      style={{ background: 'rgba(3,3,5,0.88)', borderBottom: '1px solid rgba(255,0,51,0.08)' }}>
-      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-center relative">
+      style={{ background: 'rgba(3,3,5,0.88)', borderBottom: '1px solid rgba(255,0,51,0.08)', position: 'fixed' }}>
+
+      {/* Timer — pinned to the extreme right of the full viewport */}
+      <div
+        className="hidden md:flex items-center gap-2"
+        aria-label="Current time"
+        style={{
+          position: 'absolute',
+          top: '50%',
+          right: '1.5rem',
+          transform: 'translateY(-50%)',
+          fontFamily: "'JetBrains Mono', monospace",
+          fontSize: '0.72rem',
+          letterSpacing: '0.16em',
+          color: 'rgba(0, 255, 136, 0.7)',
+          textShadow: '0 0 8px rgba(0, 255, 136, 0.3)',
+          zIndex: 10,
+        }}
+      >
+        <Clock
+          className="w-3.5 h-3.5"
+          style={{ color: 'rgba(0, 255, 136, 0.6)' }}
+        />
+        <span>{currentTime || '00:00:00'}</span>
+      </div>
+
+      {/* Centered nav links */}
+      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-center">
         {/* Desktop nav */}
         <div className="hidden md:flex items-center gap-8">
           {navItems.map((item) => (
@@ -72,25 +98,6 @@ export function Navbar({ activeSection }: NavbarProps) {
             <Menu className="w-5 h-5 transition duration-200 group-hover:text-[#ff3355] group-hover:drop-shadow-[0_0_10px_rgba(255,0,51,0.7)]" />
           )}
         </button>
-
-        {/* Right-corner timer */}
-        <div
-          className="hidden md:flex items-center gap-2 absolute right-6"
-          aria-label="Current time"
-          style={{
-            fontFamily: "'JetBrains Mono', monospace",
-            fontSize: '0.72rem',
-            letterSpacing: '0.16em',
-            color: 'rgba(0, 255, 136, 0.7)',
-            textShadow: '0 0 8px rgba(0, 255, 136, 0.3)',
-          }}
-        >
-          <Clock
-            className="w-3.5 h-3.5"
-            style={{ color: 'rgba(0, 255, 136, 0.6)' }}
-          />
-          <span>{currentTime || '00:00:00'}</span>
-        </div>
       </div>
 
       {/* Mobile menu */}
