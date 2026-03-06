@@ -4,21 +4,22 @@ export function AboutSection() {
       <div className="w-full section-fade" style={{ maxWidth: '1400px', marginLeft: 'auto', marginRight: 'auto' }}>
         <div className="px-6 md:px-14 pt-16 pb-24 md:pt-20 md:pb-32">
           {/* Section header */}
-          <div className="mb-12">
-            <div className="inline-block border border-emerald-900/50 bg-[#0d1117] rounded-md px-4 py-2">
-              <span className="text-emerald-500 font-mono text-lg md:text-xl font-medium">{`>_ about_`}</span>
-            </div>
+          <div className="mb-10">
+            <h2 className="font-space text-2xl md:text-3xl font-bold text-white tracking-wider flex items-center gap-4">
+              ABOUT
+              <div className="h-[1px] flex-1 bg-gradient-to-r from-[#ff0033]/40 to-transparent" />
+            </h2>
           </div>
 
           {/* About Content */}
-          <div className="bg-[#0f141a] border border-[#222] border-t-2 border-t-[#1f6b4e] rounded-xl p-6 md:p-10">
+          <div className="hack-card rounded-xl p-8 md:p-12 border-t-2 border-t-[#ff0033]">
             <div className="space-y-6">
-              <p className="font-mono text-[0.85rem] md:text-[0.95rem] leading-loose text-[#8b949e]">
+              <p className="font-inter text-[0.95rem] md:text-[1rem] leading-loose text-gray-300">
                 I am an engineering student with a growing interest in web development and problem solving.
                 Currently focused on building web projects and practicing DSA in Java to strengthen logical
                 thinking and coding skills.
               </p>
-              <p className="font-mono text-[0.85rem] md:text-[0.95rem] leading-loose text-[#8b949e]">
+              <p className="font-inter text-[0.95rem] md:text-[1rem] leading-loose text-gray-300">
                 Driven by curiosity, continuous learning, and the excitement of creating something meaningful
                 with code.
               </p>

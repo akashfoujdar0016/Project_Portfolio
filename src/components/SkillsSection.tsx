@@ -15,10 +15,11 @@ export function SkillsSection() {
       <div className="w-full section-fade" style={{ maxWidth: '1400px', marginLeft: 'auto', marginRight: 'auto' }}>
         <div className="px-6 md:px-14 pt-16 pb-24 md:pt-20 md:pb-32">
           {/* Section header */}
-          <div className="mb-12">
-            <div className="inline-block border border-emerald-900/50 bg-[#0d1117] rounded-md px-4 py-2">
-              <span className="text-emerald-500 font-mono text-lg md:text-xl font-medium">{`>_ techStack_`}</span>
-            </div>
+          <div className="mb-10">
+            <h2 className="font-space text-2xl md:text-3xl font-bold text-white tracking-wider flex items-center gap-4">
+              TECH STACK
+              <div className="h-[1px] flex-1 bg-gradient-to-r from-[#ff0033]/40 to-transparent" />
+            </h2>
           </div>
 
           {/* Skills Grid */}
@@ -26,14 +27,14 @@ export function SkillsSection() {
             {skills.map((skill, i) => (
               <div
                 key={i}
-                className="bg-[#0f141a] border border-[#222] rounded-xl p-4 md:p-6 flex flex-col items-center justify-center gap-3 hover:border-emerald-500 hover:bg-[#121820] transition-colors cursor-pointer group"
+                className="hack-card rounded-xl p-5 md:p-6 flex flex-col items-center justify-center gap-4 group cursor-pointer"
               >
-                <div className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
+                <div className="w-12 h-12 flex items-center justify-center">
                   <i
-                    className={`${skill.icon} text-3xl md:text-4xl leading-none shrink-0 transition-transform duration-300 group-hover:scale-110`}
+                    className={`${skill.icon} text-4xl leading-none shrink-0 transition-transform duration-300 group-hover:scale-110 drop-shadow-lg`}
                   />
                 </div>
-                <span className="font-mono text-[0.7rem] md:text-[0.75rem] font-medium text-gray-400 group-hover:text-emerald-400 transition-colors duration-300">
+                <span className="font-mono text-[0.75rem] font-medium text-gray-400 group-hover:text-white transition-colors duration-300">
                   {skill.name}
                 </span>
               </div>
