@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-/* ── 1) ORIGINAL THEME (restored) ── */
+/* ── 1) ORIGINAL THEME (unchanged) ── */
 @theme {
   --font-space: 'Space Grotesk', sans-serif;
   --font-inter: 'Inter', sans-serif;
@@ -48,13 +48,12 @@ section,
   scroll-margin-top: 110px;
 }
 
-/* Selection */
 ::selection {
   background: var(--color-brand);
   color: #fff;
 }
 
-/* Scrollbar (optional but premium) */
+/* Scrollbar */
 ::-webkit-scrollbar { width: 8px; }
 ::-webkit-scrollbar-track { background: var(--color-bg-deep); }
 ::-webkit-scrollbar-thumb { background: #2b2b31; border-radius: 999px; }
@@ -72,7 +71,12 @@ body::before {
   mix-blend-mode: overlay;
 }
 
-/* ── 3) NAVBAR (centered items, timer pinned right, no overlap) ── */
+/* ──────────────────────────────────────────────────────────────
+   3) NAVBAR (YOUR EXACT CONDITION)
+   - HOME/ABOUT/TECH STACK/PROJECTS/CONTACT: perfectly centered
+   - TIMER: stays at the rightmost corner (same position)
+   - NO overlap: center group gets side padding "safe area"
+   ────────────────────────────────────────────────────────────── */
 nav {
   position: fixed;
   top: 0;
@@ -81,17 +85,22 @@ nav {
   height: 80px;
   z-index: 1000;
 
-  padding: 0 5%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
   background: rgba(6, 6, 8, 0.90);
   backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--color-border-subtle);
 
   /* positioning context */
   position: relative;
+
+  /* keep your original left/right breathing room */
+  padding: 0 5%;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  /* controls how much empty space we reserve so links never touch logo/timer */
+  --nav-safe: clamp(160px, 18vw, 380px);
 }
 
 /* Logo (left) */
@@ -102,17 +111,19 @@ nav .logo {
   letter-spacing: -0.02em;
   color: #fff;
   text-decoration: none;
-  z-index: 20;
   white-space: nowrap;
+  z-index: 30;
 }
 
-/* Timer pinned to rightmost corner */
-nav .timer {
+/* Timer pinned to the rightmost corner (like your screenshot) */
+nav .timer,
+nav .nav-timer,
+nav [data-timer] {
   position: absolute;
   right: 5%;
   top: 50%;
   transform: translateY(-50%);
-  z-index: 20;
+  z-index: 30;
 
   font-family: var(--font-mono);
   color: var(--color-brand);
@@ -120,15 +131,19 @@ nav .timer {
   white-space: nowrap;
 }
 
-/* Centered nav items (HOME / ABOUT / TECH STACK / PROJECT / CONTACT) */
+/*
+  Center items:
+  IMPORTANT CHANGE from earlier attempts:
+  - we center using `inset: 0` + `justify-content: center`
+  - so even if your UL/DIV has `w-full` from Tailwind, it still centers correctly
+  - we add padding left/right (safe area) so it cannot overlap timer/logo
+*/
 nav ul,
 nav .nav-links,
 nav .links,
 nav .menu {
   position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  inset: 0;
 
   display: flex;
   align-items: center;
@@ -136,17 +151,26 @@ nav .menu {
 
   list-style: none;
   margin: 0 !important;
-  padding: 0 !important;
 
-  /* Prevent overlap: reserve space on both sides for logo + timer */
-  --nav-side-reserve: clamp(150px, 18vw, 360px);
-  max-width: calc(100% - (2 * var(--nav-side-reserve)));
+  /* safe padding to avoid overlap with logo/timer */
+  padding: 0 var(--nav-safe) !important;
 
-  /* Spread items in center */
-  gap: clamp(1.25rem, 3.6vw, 5rem) !important;
+  /* spread items in the center */
+  gap: clamp(1.25rem, 3.6vw, 4.5rem) !important;
 
   z-index: 10;
-  white-space: nowrap;
+
+  /* prevents this full-width layer from blocking logo/timer clicks */
+  pointer-events: none;
+}
+
+/* Re-enable clicks only on the actual items/links */
+nav ul li,
+nav ul a,
+nav .nav-links a,
+nav .links a,
+nav .menu a {
+  pointer-events: auto;
 }
 
 /* Link styling */
@@ -159,12 +183,11 @@ nav .menu {
   text-transform: uppercase;
   letter-spacing: 0.14em;
   position: relative;
+  white-space: nowrap;
   transition: color 0.25s ease;
 }
 
-.nav-link:hover {
-  color: #fff;
-}
+.nav-link:hover { color: #fff; }
 
 /* Red dot indicator */
 .nav-link::after {
@@ -179,19 +202,16 @@ nav .menu {
   background: var(--color-brand);
   transition: transform 0.25s var(--ease-premium);
 }
+.nav-link:hover::after { transform: translateX(-50%) scale(1); }
 
-.nav-link:hover::after {
-  transform: translateX(-50%) scale(1);
-}
-
-/* Responsive safety on small screens */
+/* Responsive: reduce safe area + gap so it still fits */
 @media (max-width: 900px) {
+  nav { --nav-safe: clamp(120px, 22vw, 240px); }
   nav ul,
   nav .nav-links,
   nav .links,
   nav .menu {
-    --nav-side-reserve: clamp(120px, 22vw, 240px);
-    gap: clamp(0.75rem, 2.6vw, 1.75rem) !important;
+    gap: clamp(0.75rem, 2.5vw, 1.5rem) !important;
   }
   .nav-link { font-size: 0.74rem; letter-spacing: 0.12em; }
 }
@@ -314,7 +334,7 @@ section {
   transform: translateY(-3px) scale(1.08);
 }
 
-/* ── 8) CONTACT (increase spacing between GitHub/LinkedIn/LeetCode/Email) ── */
+/* ── 8) CONTACT (more spacing between icons) ── */
 .contact-section,
 #contact,
 footer {
@@ -322,7 +342,6 @@ footer {
   padding: 8rem 0;
 }
 
-/* Container: force big spacing even if Tailwind utilities exist */
 .contact-icons,
 .social-links,
 .footer-links {
@@ -331,19 +350,17 @@ footer {
   align-items: center;
   flex-wrap: wrap;
 
-  /* BIG SPACING */
-  column-gap: clamp(3rem, 8vw, 7rem) !important;
-  row-gap: 2.5rem !important;
-
+  gap: clamp(3.5rem, 7vw, 7rem) !important; /* BIG spacing */
   margin-top: 4rem;
   width: 100%;
 }
 
-/* Fallback spacing: if something kills gap, margins still spread items */
 .contact-icons > *,
 .social-links > *,
 .footer-links > * {
-  margin-inline: 1.75rem !important;
+  /* fallback spacing if something overrides gap */
+  margin-inline: clamp(1.75rem, 3vw, 3.5rem) !important;
+
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -378,8 +395,6 @@ footer {
 
 /* ── 9) REDUCED MOTION ── */
 @media (prefers-reduced-motion: reduce) {
-  * {
-    transition: none !important;
-    scroll-behavior: auto !important;
-  }
+  * { transition: none !important; }
+  html { scroll-behavior: auto !important; }
 }
