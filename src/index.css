@@ -1,279 +1,385 @@
 @import "tailwindcss";
 
-/* ── 1. THEME (Your Original Palette) ── */
+/* ── 1) ORIGINAL THEME (restored) ── */
 @theme {
   --font-space: 'Space Grotesk', sans-serif;
   --font-inter: 'Inter', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
+
   --color-brand: #ff0033;
+  --color-brand-muted: rgba(255, 0, 51, 0.10);
   --color-bg-deep: #060608;
-  --color-border: rgba(255, 255, 255, 0.06);
+  --color-border-subtle: rgba(255, 255, 255, 0.06);
+
+  --color-text-main: #e4e4e7;
+  --color-text-muted: #a1a1aa;
+
+  --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* ── 2. BASE RESET & ATMOSPHERE ── */
+/* ── 2) BASE RESET ── */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
+
 html {
   scroll-behavior: smooth;
   background-color: var(--color-bg-deep);
 }
+
 body {
   background-color: var(--color-bg-deep);
-  color: #a1a1aa;
+  color: var(--color-text-muted);
   font-family: var(--font-inter);
   line-height: 1.7;
-  overflow-x: hidden;
   font-size: 16px;
+  overflow-x: hidden;
+  width: 100%;
 }
 
-/* Cinematic Grain (Subtle) */
+/* Make anchor jumps account for fixed navbar */
+section,
+[id] {
+  scroll-margin-top: 110px;
+}
+
+/* Selection */
+::selection {
+  background: var(--color-brand);
+  color: #fff;
+}
+
+/* Scrollbar (optional but premium) */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--color-bg-deep); }
+::-webkit-scrollbar-thumb { background: #2b2b31; border-radius: 999px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255, 0, 51, 0.7); }
+
+/* Subtle film grain */
 body::before {
-  content: '';
+  content: "";
   position: fixed;
   inset: 0;
   z-index: 9999;
   pointer-events: none;
-  opacity: 0.03;
+  opacity: 0.04;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
   mix-blend-mode: overlay;
 }
 
-/* ── 3. NAVBAR (VIEWPORT-ANCHORED CENTERING) ── */
-/* This ignores ALL HTML structure and centers based on viewport */
+/* ── 3) NAVBAR (centered items, timer pinned right, no overlap) ── */
 nav {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 80px; /* Fixed height for consistent alignment */
+  height: 80px;
   z-index: 1000;
+
   padding: 0 5%;
-  
   display: flex;
-  justify-content: space-between; /* Logo Left | Timer Right */
   align-items: center;
-  
-  background: rgba(6, 6, 8, 0.9);
+  justify-content: space-between;
+
+  background: rgba(6, 6, 8, 0.90);
   backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border-subtle);
+
+  /* positioning context */
+  position: relative;
 }
 
-/* Logo (Left) */
+/* Logo (left) */
 nav .logo {
   font-family: var(--font-space);
   font-weight: 700;
   font-size: 1.5rem;
+  letter-spacing: -0.02em;
   color: #fff;
   text-decoration: none;
   z-index: 20;
-}
-
-/* THE FIX: LINKS CENTERED RELATIVE TO VIEWPORT */
-nav ul, 
-nav .nav-links, 
-nav .links,
-nav > div:not(.logo):not(.timer) { /* Targets ANY non-logo/timer child */
-  position: absolute;
-  left: 50vw; /* 50% of viewport width */
-  top: 50%;   /* 50% of navbar height (40px) */
-  transform: translate(-50%, -50%); /* Perfect center */
-  
-  display: flex;
-  align-items: center;
-  
-  /* LUXURY SPREAD: 7rem (112px) between items */
-  gap: 7rem !important; 
-  
-  list-style: none;
-  margin: 0 !important;
-  padding: 0 !important;
-  width: auto !important; /* Critical: Remove width constraints */
-  max-width: none !important;
-  z-index: 10;
-}
-
-/* Link Styling */
-.nav-link {
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: #a1a1aa;
-  text-decoration: none;
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
-  transition: color 0.3s ease;
   white-space: nowrap;
 }
-.nav-link:hover { color: #fff; }
 
-/* Premium Red Dot Indicator */
-.nav-link::after {
-  content: '';
-  position: absolute;
-  bottom: -6px;
-  left: 50%;
-  transform: translateX(-50%) scale(0);
-  width: 4px; height: 4px;
-  background: var(--color-brand);
-  border-radius: 50%;
-  transition: transform 0.3s ease;
-}
-.nav-link:hover::after { transform: translateX(-50%) scale(1); }
-
-/* Timer (Right) */
+/* Timer pinned to rightmost corner */
 nav .timer {
+  position: absolute;
+  right: 5%;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 20;
+
   font-family: var(--font-mono);
   color: var(--color-brand);
   font-weight: 600;
-  z-index: 20;
+  white-space: nowrap;
 }
 
-/* ── 4. SECTIONS & COMPONENTS ── */
+/* Centered nav items (HOME / ABOUT / TECH STACK / PROJECT / CONTACT) */
+nav ul,
+nav .nav-links,
+nav .links,
+nav .menu {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  list-style: none;
+  margin: 0 !important;
+  padding: 0 !important;
+
+  /* Prevent overlap: reserve space on both sides for logo + timer */
+  --nav-side-reserve: clamp(150px, 18vw, 360px);
+  max-width: calc(100% - (2 * var(--nav-side-reserve)));
+
+  /* Spread items in center */
+  gap: clamp(1.25rem, 3.6vw, 5rem) !important;
+
+  z-index: 10;
+  white-space: nowrap;
+}
+
+/* Link styling */
+.nav-link {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  position: relative;
+  transition: color 0.25s ease;
+}
+
+.nav-link:hover {
+  color: #fff;
+}
+
+/* Red dot indicator */
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -8px;
+  transform: translateX(-50%) scale(0);
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--color-brand);
+  transition: transform 0.25s var(--ease-premium);
+}
+
+.nav-link:hover::after {
+  transform: translateX(-50%) scale(1);
+}
+
+/* Responsive safety on small screens */
+@media (max-width: 900px) {
+  nav ul,
+  nav .nav-links,
+  nav .links,
+  nav .menu {
+    --nav-side-reserve: clamp(120px, 22vw, 240px);
+    gap: clamp(0.75rem, 2.6vw, 1.75rem) !important;
+  }
+  .nav-link { font-size: 0.74rem; letter-spacing: 0.12em; }
+}
+
+/* ── 4) SECTIONS / TYPOGRAPHY ── */
 section {
-  max-width: 90rem;
+  max-width: 85rem;
   margin: 0 auto;
-  padding: 10rem 2rem;
+  padding: 8rem 2rem;
   position: relative;
 }
 
-/* Tech Stack (Small Icons) */
-.tech-stack-container, .tech-stack {
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.30em;
+  color: var(--color-brand);
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+
   display: flex;
-  flex-wrap: wrap;
-  gap: 2.5rem;
-  margin-top: 3rem;
-  padding: 1.5rem;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid var(--color-border);
-  border-radius: 100px;
-  width: fit-content;
-}
-.tech-stack img, .tech-stack svg {
-  height: 1.5rem !important;
-  width: auto !important;
-  object-fit: contain;
-  filter: grayscale(100%) opacity(0.6);
-  transition: 0.4s;
-}
-.tech-stack img:hover, .tech-stack svg:hover {
-  filter: none;
-  transform: translateY(-3px) scale(1.1);
+  align-items: center;
+  gap: 1rem;
 }
 
-/* Cards */
-.hack-card {
-  background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, transparent 100%);
-  border: 1px solid var(--color-border);
-  padding: 3rem;
-  border-radius: 16px;
-  transition: all 0.5s ease;
+.section-label::before {
+  content: "";
+  width: 24px;
+  height: 1px;
+  background: var(--color-brand);
+  opacity: 0.7;
 }
-.hack-card h3 {
-  font-family: var(--font-space);
-  color: #fff;
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-}
-.hack-card:hover {
-  border-color: rgba(255,0,51,0.3);
-  transform: translateY(-5px);
-  background: rgba(255,255,255,0.05);
-}
+
 .section-title {
   font-family: var(--font-space);
-  font-size: clamp(2.8rem, 6vw, 4.5rem);
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
   font-weight: 600;
   color: #fff;
   line-height: 1.1;
-  letter-spacing: -0.03em;
-  margin-bottom: 2.5rem;
+  letter-spacing: -0.04em;
+  margin-bottom: 3rem;
 }
 
-/* ── 5. CONTACT SECTION (MARGIN BOMB) ── */
-/* This forces spacing REGARDLESS of gap/flex settings */
-.contact-section, footer, #contact {
+/* ── 5) GLASS SECTION SHELL ── */
+.section-shell {
+  background: rgba(15, 15, 18, 0.60);
+  backdrop-filter: blur(22px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 4rem;
+  border-radius: 16px;
+  box-shadow:
+    0 30px 60px -12px rgba(0,0,0,0.55),
+    inset 0 1px 1px rgba(255,255,255,0.05);
+  transition: transform 0.6s var(--ease-premium), box-shadow 0.6s var(--ease-premium), border-color 0.35s ease;
+}
+
+.section-shell:hover {
+  border-color: rgba(255, 0, 51, 0.20);
+  transform: translateY(-4px);
+  box-shadow: 0 40px 80px -15px rgba(0,0,0,0.65);
+}
+
+/* ── 6) CARDS ── */
+.hack-card,
+.card,
+.project-card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.005) 100%);
+  border: 1px solid var(--color-border-subtle);
+  padding: 3rem;
+  border-radius: 16px;
+  transition: transform 0.5s var(--ease-premium), border-color 0.35s ease, background 0.35s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.hack-card:hover,
+.card:hover,
+.project-card:hover {
+  border-color: rgba(255, 0, 51, 0.28);
+  transform: translateY(-5px);
+  background: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
+}
+
+/* ── 7) TECH STACK (smaller icons) ── */
+.tech-stack-container,
+.tech-stack,
+.logos {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+
+  gap: 2.5rem;
+  margin-top: 3rem;
+  padding: 1.25rem 2.5rem;
+
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 999px;
+  width: fit-content;
+}
+
+.tech-stack-container img,
+.tech-stack-container svg,
+.tech-stack img,
+.tech-stack svg {
+  height: 1.5rem !important; /* 24px */
+  width: auto !important;
+  object-fit: contain;
+
+  filter: grayscale(100%) opacity(0.55);
+  transition: transform 0.35s var(--ease-premium), filter 0.35s ease, opacity 0.35s ease;
+}
+
+.tech-stack-container img:hover,
+.tech-stack-container svg:hover,
+.tech-stack img:hover,
+.tech-stack svg:hover {
+  filter: grayscale(0%) opacity(1);
+  transform: translateY(-3px) scale(1.08);
+}
+
+/* ── 8) CONTACT (increase spacing between GitHub/LinkedIn/LeetCode/Email) ── */
+.contact-section,
+#contact,
+footer {
   text-align: center;
   padding: 8rem 0;
 }
 
-/* Container */
-.contact-icons, 
-.social-links, 
+/* Container: force big spacing even if Tailwind utilities exist */
+.contact-icons,
+.social-links,
 .footer-links {
-  display: flex;
+  display: flex !important;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
+
+  /* BIG SPACING */
+  column-gap: clamp(3rem, 8vw, 7rem) !important;
+  row-gap: 2.5rem !important;
+
+  margin-top: 4rem;
   width: 100%;
-  margin-top: 5rem;
-  position: relative; /* For pseudo-element */
 }
 
-/* THE NUCLEAR OPTION: Forced spacing via pseudo-element */
-.contact-icons::before,
-.social-links::before,
-.footer-links::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(
-    to right,
-    transparent 0%,
-    transparent 20%,
-    var(--color-border) 20%,
-    var(--color-border) 80%,
-    transparent 80%,
-    transparent 100%
-  );
-  /* Creates 60% gap (40% taken by 3 items at 20% each) */
-  pointer-events: none;
-  z-index: -1;
-}
-
-/* Icon Styling */
-.contact-icons > *, 
-.social-links > *, 
+/* Fallback spacing: if something kills gap, margins still spread items */
+.contact-icons > *,
+.social-links > *,
 .footer-links > * {
-  margin: 0 !important; /* Kill any inherited margins */
-  padding: 0 !important;
-  display: flex;
+  margin-inline: 1.75rem !important;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   text-decoration: none;
-  color: #a1a1aa;
-  width: 60px; /* Fixed width for consistency */
-  height: 60px;
-  transition: all 0.4s ease;
+  color: var(--color-text-muted);
+  transition: transform 0.35s var(--ease-premium), color 0.25s ease;
 }
 
-/* Icons Inside Links */
-.contact-icons svg, 
-.contact-icons img {
-  height: 2.5rem !important;
-  width: auto !important;
+.contact-icons svg,
+.contact-icons img,
+.social-links svg,
+.footer-links svg {
+  height: 2.25rem;
+  width: auto;
   fill: currentColor;
-  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: transform 0.35s var(--ease-premium), filter 0.25s ease;
 }
 
-/* Hover Effects */
-.contact-icons > *:hover {
+.contact-icons a:hover,
+.social-links a:hover,
+.footer-links a:hover {
   color: var(--color-brand);
-  transform: translateY(-8px);
-}
-.contact-icons > *:hover svg {
-  filter: drop-shadow(0 0 12px rgba(255,0,51,0.4));
-  transform: scale(1.25);
+  transform: translateY(-6px);
 }
 
-/* ── 6. DEBUG OUTLINE (TEMPORARY - UNCOMMENT TO SEE) ── */
-/* 
-nav { outline: 2px solid lime; }
-nav ul { outline: 2px solid red; }
-.contact-icons { outline: 2px solid cyan; }
-*/
+.contact-icons a:hover svg,
+.social-links a:hover svg,
+.footer-links a:hover svg {
+  transform: scale(1.15);
+  filter: drop-shadow(0 0 14px rgba(255, 0, 51, 0.35));
+}
+
+/* ── 9) REDUCED MOTION ── */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
