@@ -197,7 +197,7 @@ body::after {
 .nav-link {
   position: relative;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.7rem;
+  font-size: 0.85rem;
   font-weight: 600;
   text-decoration: none;
   color: rgba(180, 180, 180, 0.55);
@@ -215,11 +215,6 @@ body::after {
 .nav-link:hover {
   color: #ff5a6a;
   text-shadow: 0 0 12px rgba(255, 0, 51, 0.45);
-}
-
-.nav-link.active {
-  color: #ff0033;
-  text-shadow: 0 0 12px rgba(255, 0, 51, 0.55);
 }
 
 /* ── Section label ── */
