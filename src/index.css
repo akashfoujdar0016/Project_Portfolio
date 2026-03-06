@@ -1,153 +1,177 @@
 @import "tailwindcss";
 
-/* ── SAFE & PREMIUM THEME CONFIGURATION ── */
-:root {
-  /* Fonts */
-  --font-display: 'Space Grotesk', system-ui, sans-serif;
-  --font-body: 'Inter', system-ui, sans-serif;
+/* ── ORIGINAL THEME RESTORED ── */
+@theme {
+  --font-space: 'Space Grotesk', sans-serif;
+  --font-inter: 'Inter', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
   
-  /* Colors */
+  /* Your Original Luxury Palette */
   --color-brand: #ff0033;
-  --color-brand-glow: rgba(255, 0, 51, 0.3);
-  --color-bg: #050507;     /* Deepest Black/Blue */
-  --color-surface: #0f0f12; /* Slightly lighter for cards */
-  --color-text-main: #ededef;
+  --color-brand-muted: rgba(255, 0, 51, 0.1);
+  --color-bg-deep: #060608;
+  --color-border-subtle: rgba(255, 255, 255, 0.06);
+  --color-text-main: #e4e4e7;
   --color-text-muted: #a1a1aa;
-  --color-border: rgba(255, 255, 255, 0.08);
 }
 
-/* ── RESET & STRUCTURE (Fixes layout breaking) ── */
+/* ── BASE RESET & ATMOSPHERE ── */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  -webkit-font-smoothing: antialiased;
 }
 
-html, body {
-  background-color: var(--color-bg);
-  color: var(--color-text-main);
-  font-family: var(--font-body);
-  line-height: 1.6;
-  overflow-x: hidden; /* Prevents horizontal scrollbars */
-  width: 100%;
+html {
+  scroll-behavior: smooth;
+  background-color: var(--color-bg-deep);
 }
 
-/* ── SUBTLE BACKGROUND (No layout interference) ── */
 body {
-  /* Simple radial gradient that stays in the back */
-  background-image: radial-gradient(circle at 50% 0%, #1a1a20 0%, var(--color-bg) 60%);
-  min-height: 100vh;
-}
-
-/* ── LAYOUT CONTAINER ── */
-/* This centers your content and prevents it from hitting edges */
-section, .container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 4rem 1.5rem;
-  position: relative;
-  z-index: 10; /* Ensures content sits ABOVE background */
-}
-
-/* ── TYPOGRAPHY (Clean & Expensive) ── */
-h1, h2, h3, .title {
-  font-family: var(--font-display);
-  font-weight: 600;
-  color: #fff;
-  letter-spacing: -0.03em; /* Tight spacing = Modern */
-  line-height: 1.1;
-  margin-bottom: 1.5rem;
-}
-
-h1 { font-size: clamp(2.5rem, 5vw, 4rem); }
-h2 { font-size: clamp(2rem, 4vw, 3rem); }
-
-p {
+  background-color: var(--color-bg-deep);
   color: var(--color-text-muted);
-  font-size: 1.05rem;
-  max-width: 65ch; /* Optimal reading width */
-  margin-bottom: 2rem;
+  font-family: var(--font-inter);
+  line-height: 1.7;
+  overflow-x: hidden;
+  font-size: 16px;
 }
 
-/* ── TECH STACK FIX (Small, Uniform Icons) ── */
-/* This forces ALL images in your tech stack area to behave */
-.tech-stack, 
-.logos, 
-div[class*="stack"] {
+/* Restoring the "Grain" Texture (Subtle) */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.05; /* Kept low for cleanliness */
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* ── LAYOUT & TYPOGRAPHY ── */
+section {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 8rem 2rem;
+  position: relative;
+}
+
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  color: var(--color-brand);
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.section-label::before {
+  content: '';
+  width: 24px;
+  height: 1px;
+  background: var(--color-brand);
+}
+
+.section-title {
+  font-family: var(--font-space);
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 600;
+  color: #ffffff;
+  line-height: 1.1;
+  letter-spacing: -0.03em; /* The "Expensive" tight tracking */
+  margin-bottom: 3rem;
+}
+
+/* ── TECH STACK FIX (Small, Clean, Professional) ── */
+/* This container aligns them perfectly */
+.tech-stack-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 2rem;
   align-items: center;
-  margin-top: 2rem;
-  padding: 1.5rem;
+  gap: 2rem; /* Consistent spacing */
+  margin-top: 2.5rem;
+  padding: 1.25rem 2rem;
   
-  /* The Container Look */
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid var(--color-border);
-  border-radius: 12px;
+  /* Glass Pill Look */
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 100px;
   width: fit-content;
 }
 
-/* FORCE images to be small and uniform */
-.tech-stack img, 
-.tech-stack svg,
-div[class*="stack"] img,
-div[class*="stack"] svg {
-  height: 24px !important;  /* Enforces small size */
-  width: auto !important;   /* Maintains aspect ratio */
-  max-width: 100%;
+/* The Icons: Small, Uniform, Monochrome */
+.tech-stack-container img, 
+.tech-stack-container svg,
+.tech-icon { 
+  height: 1.5rem !important; /* Forces 24px height - Sleek */
+  width: auto;
+  object-fit: contain;
   
-  /* Styling */
+  /* Default State: Greyed out & subtle */
   filter: grayscale(100%) opacity(0.6);
   transition: all 0.3s ease;
-  cursor: pointer;
+  cursor: help;
 }
 
-/* Hover effect */
-.tech-stack img:hover, 
-.tech-stack svg:hover,
-div[class*="stack"] img:hover,
-div[class*="stack"] svg:hover {
+/* Hover State: Full Brand Color or Original Color */
+.tech-stack-container img:hover, 
+.tech-stack-container svg:hover,
+.tech-icon:hover {
   filter: grayscale(0%) opacity(1);
-  transform: scale(1.1);
+  transform: translateY(-2px);
 }
 
-/* ── UI CARDS (Glassmorphism that works) ── */
-.card, .project-card, .hack-card {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
+/* ── COMPONENTS (Restoring Original Style) ── */
+
+/* Glass Shell */
+.section-shell {
+  background: rgba(10, 10, 12, 0.6); /* Slightly darker for contrast */
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--color-border-subtle);
+  padding: 4rem;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px -10px rgba(0,0,0,0.5);
+}
+
+/* Cards */
+.hack-card {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.0) 100%);
+  border: 1px solid var(--color-border-subtle);
   padding: 2.5rem;
   border-radius: 12px;
-  transition: transform 0.3s ease, border-color 0.3s ease;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
 }
 
-.card:hover, .project-card:hover, .hack-card:hover {
-  transform: translateY(-4px);
-  border-color: rgba(255, 255, 255, 0.2);
-}
-
-/* ── BUTTONS ── */
-button, .btn, a.button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.75rem 1.5rem;
-  background: transparent;
-  border: 1px solid var(--color-border);
+.hack-card h3 {
+  font-family: var(--font-space);
   color: #fff;
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  border-radius: 6px;
-  text-decoration: none;
-  transition: all 0.2s ease;
-  cursor: pointer;
+  font-size: 1.25rem;
+  margin-bottom: 0.75rem;
 }
 
-button:hover, .btn:hover, a.button:hover {
-  border-color: var(--color-brand);
-  background: rgba(255, 0, 51, 0.1);
-  color: white;
+.hack-card:hover {
+  border-color: rgba(255, 0, 51, 0.3); /* Your Brand Red */
+  transform: translateY(-5px);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
+}
+
+/* ── NAVIGATION ── */
+.nav-link {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  text-decoration: none;
+  margin-right: 2rem;
+  transition: color 0.3s ease;
+  position: relative;
+}
+
+.nav-link:hover {
+  color: var(--color-brand); /* Brand Red hover */
 }
