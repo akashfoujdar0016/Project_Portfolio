@@ -45,7 +45,7 @@ export function ContactSection() {
 
           {/* Icons row directly under CONTACT */}
           <div className="hack-card rounded-xl p-5 md:p-8 border-t-2 border-t-[#ff0033]">
-            <div className="flex flex-wrap gap-3 md:gap-4">
+            <div className="flex flex-wrap gap-5 md:gap-8">
               {socials.map((social) => (
                 <a
                   key={social.label}
