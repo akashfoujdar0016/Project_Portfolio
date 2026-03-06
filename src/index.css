@@ -17,274 +17,414 @@
 }
 
 /* ── 2) BASE & ATMOSPHERE ── */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
 }
 
-html {
-  scroll-behavior: smooth;
-  background-color: var(--color-bg-deep);
+html{
+  scroll-behavior:smooth;
+  background-color:var(--color-bg-deep);
 }
 
-body {
-  background-color: var(--color-bg-deep);
-  color: var(--color-text-muted);
-  font-family: var(--font-inter);
-  line-height: 1.7;
-  font-size: 16px;
-  overflow-x: hidden;
-  width: 100%;
+body{
+  background-color:var(--color-bg-deep);
+  color:var(--color-text-muted);
+  font-family:var(--font-inter);
+  line-height:1.7;
+  font-size:16px;
+  overflow-x:hidden;
+  width:100%;
 }
 
-/* Scroll Offset for Navbar */
-section, [id] { scroll-margin-top: 100px; }
-
-::selection { background: var(--color-brand); color: #fff; }
-
-/* Custom Scrollbar */
-::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background: var(--color-bg-deep); }
-::-webkit-scrollbar-thumb { background: #2b2b31; border-radius: 999px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(255, 0, 51, 0.7); }
-
-/* Subtle Grain Texture */
-body::before {
-  content: "";
-  position: fixed; inset: 0; z-index: 9999; pointer-events: none; opacity: 0.04;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-  mix-blend-mode: overlay;
+/* Scroll Offset */
+section,[id]{
+  scroll-margin-top:100px;
 }
 
-/* ─────────────────────────────────────────────────────────
-   3) NAVBAR: ABSOLUTE COORDINATE METHOD (CENTERED)
-   ───────────────────────────────────────────────────────── */
-nav {
-  position: fixed !important;
-  top: 0 !important;
-  left: 0 !important;
-  width: 100vw !important;
-  height: 80px !important;
-  z-index: 1000 !important;
-  
-  background: rgba(6, 6, 8, 0.90) !important;
-  backdrop-filter: blur(16px) !important;
-  border-bottom: 1px solid var(--color-border-subtle) !important;
+::selection{
+  background:var(--color-brand);
+  color:#fff;
 }
 
-/* 1. PIN LOGO EXACTLY TO THE LEFT */
-nav .logo {
-  position: absolute !important;
-  left: 5% !important;
-  top: 50% !important;
-  transform: translateY(-50%) !important;
-  margin: 0 !important;
-  width: max-content !important;
-  z-index: 20 !important;
-  
-  font-family: var(--font-space) !important;
-  font-weight: 700 !important;
-  font-size: 1.5rem !important;
-  color: #fff !important;
-  text-decoration: none !important;
+/* Scrollbar */
+::-webkit-scrollbar{
+  width:8px;
 }
 
-/* 2. PIN TIMER EXACTLY TO THE RIGHT */
-nav .timer, 
-nav [data-timer] {
-  position: absolute !important;
-  right: 5% !important;
-  top: 50% !important;
-  transform: translateY(-50%) !important;
-  margin: 0 !important;
-  width: max-content !important;
-  z-index: 20 !important;
-  
-  font-family: var(--font-mono) !important;
-  color: var(--color-brand) !important;
-  font-weight: 600 !important;
+::-webkit-scrollbar-track{
+  background:var(--color-bg-deep);
 }
 
-/* 3. PIN LINKS TO THE DEAD MATHEMATICAL CENTER */
-nav ul, 
-nav .nav-links, 
-nav .links {
-  position: absolute !important;
-  left: 50vw !important;
-  top: 40px !important;
-  transform: translate(-50%, -50%) !important; 
-  
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  
-  width: max-content !important; 
-  max-width: none !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  
-  gap: clamp(1rem, 3.5vw, 4.5rem) !important;
-  z-index: 10 !important;
-  list-style: none !important;
+::-webkit-scrollbar-thumb{
+  background:#2b2b31;
+  border-radius:999px;
 }
 
-/* Link Styling - INCREASED ITEM SIZE */
-.nav-link {
-  font-family: var(--font-mono) !important;
-  font-size: clamp(0.85rem, 1.5vw, 1rem) !important; /* Increased base size for better readability */
-  font-weight: 500 !important;
-  color: var(--color-text-muted) !important;
-  text-decoration: none !important;
-  text-transform: uppercase !important;
-  letter-spacing: 0.14em !important;
-  white-space: nowrap !important;
-  position: relative !important;
-  transition: color 0.25s ease !important;
+::-webkit-scrollbar-thumb:hover{
+  background:rgba(255,0,51,0.7);
 }
 
-.nav-link:hover { color: #fff !important; }
+/* Grain Texture */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  pointer-events:none;
+  opacity:0.04;
 
-/* Premium Underline Dot */
-.nav-link::after {
-  content: "";
-  position: absolute; left: 50%; bottom: -8px;
-  transform: translateX(-50%) scale(0);
-  width: 4px; height: 4px; border-radius: 50%;
-  background: var(--color-brand);
-  transition: transform 0.25s ease;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+
+  mix-blend-mode:overlay;
 }
-.nav-link:hover::after { transform: translateX(-50%) scale(1); }
 
-/* Mobile Navbar Fix */
-@media (max-width: 850px) {
-  nav .timer, nav [data-timer] {
-    display: none !important;
+/* ─────────────────────────────────────────
+   3) NAVBAR (BALANCED CENTERED LAYOUT)
+   ───────────────────────────────────────── */
+
+nav{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:80px;
+  z-index:1000;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  background:rgba(6,6,8,0.90);
+  backdrop-filter:blur(16px);
+
+  border-bottom:1px solid var(--color-border-subtle);
+}
+
+/* LOGO LEFT */
+
+nav .logo{
+  position:absolute;
+  left:5%;
+  top:50%;
+  transform:translateY(-50%);
+
+  font-family:var(--font-space);
+  font-weight:700;
+  font-size:1.5rem;
+  color:#fff;
+  text-decoration:none;
+}
+
+/* TIMER RIGHT */
+
+nav .timer,
+nav [data-timer]{
+  position:absolute;
+  right:5%;
+  top:50%;
+  transform:translateY(-50%);
+
+  font-family:var(--font-mono);
+  color:var(--color-brand);
+  font-weight:600;
+}
+
+/* CENTER LINKS */
+
+nav ul,
+nav .nav-links,
+nav .links{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  list-style:none;
+
+  gap:clamp(2rem,4vw,4.5rem);
+
+  padding:0;
+  margin:0;
+}
+
+/* NAV LINKS */
+
+.nav-link{
+  font-family:var(--font-mono);
+  font-size:clamp(0.9rem,1.2vw,1rem);
+  font-weight:500;
+
+  color:var(--color-text-muted);
+
+  text-decoration:none;
+  text-transform:uppercase;
+  letter-spacing:0.14em;
+
+  white-space:nowrap;
+
+  position:relative;
+
+  transition:color 0.25s ease;
+}
+
+.nav-link:hover{
+  color:#fff;
+}
+
+/* Underline Dot */
+
+.nav-link::after{
+  content:"";
+
+  position:absolute;
+  left:50%;
+  bottom:-8px;
+
+  transform:translateX(-50%) scale(0);
+
+  width:4px;
+  height:4px;
+
+  border-radius:50%;
+  background:var(--color-brand);
+
+  transition:transform 0.25s ease;
+}
+
+.nav-link:hover::after{
+  transform:translateX(-50%) scale(1);
+}
+
+/* MOBILE NAVBAR */
+
+@media(max-width:850px){
+
+  nav .timer{
+    display:none;
   }
-  nav ul, nav .nav-links {
-    gap: clamp(1.25rem, 4vw, 2rem) !important; /* Slightly wider gap on mobile for better touch targets */
+
+  nav ul{
+    gap:1.5rem;
   }
-  .nav-link {
-    font-size: clamp(0.85rem, 2.5vw, 1rem) !important; /* Slightly larger on mobile for readability */
+
+  .nav-link{
+    font-size:0.9rem;
   }
+
 }
 
 /* ── 4) TYPOGRAPHY & SECTIONS ── */
-section {
-  max-width: 85rem;
-  margin: 0 auto;
-  padding: 8rem 2rem;
-  position: relative;
+
+section{
+  max-width:85rem;
+  margin:0 auto;
+  padding:8rem 2rem;
+  position:relative;
 }
 
-.section-label {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.30em;
-  color: var(--color-brand);
-  text-transform: uppercase;
-  margin-bottom: 1.5rem;
-  display: flex; align-items: center; gap: 1rem;
-}
-.section-label::before { content: ""; width: 24px; height: 1px; background: var(--color-brand); }
+.section-label{
+  font-family:var(--font-mono);
+  font-size:0.75rem;
+  font-weight:700;
+  letter-spacing:0.30em;
 
-.section-title {
-  font-family: var(--font-space);
-  font-size: clamp(2.5rem, 5vw, 4.5rem);
-  font-weight: 600;
-  color: #fff;
-  line-height: 1.1;
-  letter-spacing: -0.04em;
-  margin-bottom: 3rem;
+  color:var(--color-brand);
+
+  text-transform:uppercase;
+
+  margin-bottom:1.5rem;
+
+  display:flex;
+  align-items:center;
+  gap:1rem;
 }
 
-/* ── 5) GLASS SECTION SHELL ── */
-.section-shell {
-  background: rgba(15, 15, 18, 0.60);
-  backdrop-filter: blur(22px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  padding: 4rem;
-  border-radius: 16px;
-  box-shadow: 0 30px 60px -12px rgba(0,0,0,0.55);
-  transition: all 0.6s var(--ease-premium);
+.section-label::before{
+  content:"";
+  width:24px;
+  height:1px;
+  background:var(--color-brand);
 }
-.section-shell:hover {
-  border-color: rgba(255, 0, 51, 0.20);
-  transform: translateY(-4px);
+
+.section-title{
+  font-family:var(--font-space);
+  font-size:clamp(2.5rem,5vw,4.5rem);
+  font-weight:600;
+
+  color:#fff;
+
+  line-height:1.1;
+  letter-spacing:-0.04em;
+
+  margin-bottom:3rem;
+}
+
+/* ── 5) GLASS SECTION ── */
+
+.section-shell{
+
+  background:rgba(15,15,18,0.60);
+  backdrop-filter:blur(22px);
+
+  border:1px solid rgba(255,255,255,0.05);
+
+  padding:4rem;
+
+  border-radius:16px;
+
+  box-shadow:0 30px 60px -12px rgba(0,0,0,0.55);
+
+  transition:all 0.6s var(--ease-premium);
+}
+
+.section-shell:hover{
+
+  border-color:rgba(255,0,51,0.20);
+
+  transform:translateY(-4px);
+
 }
 
 /* ── 6) CARDS ── */
-.hack-card, .card, .project-card {
-  background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.005) 100%);
-  border: 1px solid var(--color-border-subtle);
-  padding: 3rem;
-  border-radius: 16px;
-  transition: all 0.5s var(--ease-premium);
-}
-.hack-card:hover, .card:hover, .project-card:hover {
-  border-color: rgba(255, 0, 51, 0.3);
-  transform: translateY(-5px);
-  background: rgba(255,255,255,0.05);
+
+.hack-card,
+.card,
+.project-card{
+
+  background:linear-gradient(
+  180deg,
+  rgba(255,255,255,0.03) 0%,
+  rgba(255,255,255,0.005) 100%
+  );
+
+  border:1px solid var(--color-border-subtle);
+
+  padding:3rem;
+
+  border-radius:16px;
+
+  transition:all 0.5s var(--ease-premium);
 }
 
-/* ── 7) TECH STACK (Small Icons) ── */
-.tech-stack-container, .tech-stack {
-  display: flex; flex-wrap: wrap; align-items: center; gap: 2.5rem;
-  margin-top: 3rem; padding: 1.25rem 2.5rem;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid var(--color-border-subtle);
-  border-radius: 999px;
-  width: fit-content;
-}
-.tech-stack-container img, .tech-stack-container svg {
-  height: 1.5rem !important; /* Forces 24px */
-  width: auto !important;
-  filter: grayscale(100%) opacity(0.55);
-  transition: all 0.35s ease;
-}
-.tech-stack-container img:hover, .tech-stack-container svg:hover {
-  filter: grayscale(0%) opacity(1);
-  transform: translateY(-3px) scale(1.1);
+.hack-card:hover,
+.card:hover,
+.project-card:hover{
+
+  border-color:rgba(255,0,51,0.3);
+
+  transform:translateY(-5px);
+
+  background:rgba(255,255,255,0.05);
 }
 
-/* ── 8) CONTACT SECTION (Spacious) ── */
-.contact-section, footer, #contact {
-  text-align: center;
-  padding: 8rem 0;
+/* ── 7) TECH STACK ── */
+
+.tech-stack-container,
+.tech-stack{
+
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+
+  gap:2.5rem;
+
+  margin-top:3rem;
+
+  padding:1.25rem 2.5rem;
+
+  background:rgba(255,255,255,0.02);
+
+  border:1px solid var(--color-border-subtle);
+
+  border-radius:999px;
+
+  width:fit-content;
 }
 
-.contact-icons, .social-links {
-  display: flex !important;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: clamp(3.5rem, 7vw, 7rem) !important; /* HUGE SPACING */
-  margin-top: 4rem;
-  width: 100%;
+.tech-stack-container img,
+.tech-stack-container svg{
+
+  height:1.5rem !important;
+  width:auto !important;
+
+  filter:grayscale(100%) opacity(0.55);
+
+  transition:all 0.35s ease;
 }
 
-.contact-icons > *, .social-links > * {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  color: var(--color-text-muted);
-  transition: all 0.35s ease;
+.tech-stack-container img:hover,
+.tech-stack-container svg:hover{
+
+  filter:grayscale(0%) opacity(1);
+
+  transform:translateY(-3px) scale(1.1);
 }
 
-.contact-icons svg, .contact-icons img {
-  height: 2.25rem; width: auto; fill: currentColor;
-  transition: all 0.35s ease;
+/* ── 8) CONTACT SECTION ── */
+
+.contact-section,
+footer,
+#contact{
+
+  text-align:center;
+
+  padding:8rem 0;
 }
 
-.contact-icons a:hover, .social-links a:hover {
-  color: var(--color-brand);
-  transform: translateY(-6px);
+.contact-icons,
+.social-links{
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-wrap:wrap;
+
+  gap:clamp(3.5rem,7vw,7rem);
+
+  margin-top:4rem;
+
+  width:100%;
 }
-.contact-icons a:hover svg {
-  transform: scale(1.15);
-  filter: drop-shadow(0 0 14px rgba(255, 0, 51, 0.35));
+
+.contact-icons>*,
+.social-links>*{
+
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+
+  text-decoration:none;
+
+  color:var(--color-text-muted);
+
+  transition:all 0.35s ease;
+}
+
+.contact-icons svg,
+.contact-icons img{
+
+  height:2.25rem;
+  width:auto;
+
+  fill:currentColor;
+
+  transition:all 0.35s ease;
+}
+
+.contact-icons a:hover,
+.social-links a:hover{
+
+  color:var(--color-brand);
+
+  transform:translateY(-6px);
+}
+
+.contact-icons a:hover svg{
+
+  transform:scale(1.15);
+
+  filter:drop-shadow(0 0 14px rgba(255,0,51,0.35));
 }
