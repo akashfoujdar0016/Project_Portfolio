@@ -60,7 +60,7 @@ body::before {
 }
 
 /* ─────────────────────────────────────────────────────────
-   3) NAVBAR: ABSOLUTE COORDINATE METHOD
+   3) NAVBAR: ABSOLUTE COORDINATE METHOD (CENTERED)
    ───────────────────────────────────────────────────────── */
 nav {
   position: fixed !important;
@@ -90,15 +90,6 @@ nav .logo {
   font-size: 1.5rem !important;
   color: #fff !important;
   text-decoration: none !important;
-  
-  /* Icon alignment fix for Logo */
-  display: inline-flex !important;
-  align-items: center !important;
-  gap: 0.5rem !important;
-}
-nav .logo svg, nav .logo img {
-  height: 1.2em !important; /* Scales to match text */
-  width: auto !important;
 }
 
 /* 2. PIN TIMER EXACTLY TO THE RIGHT */
@@ -122,8 +113,8 @@ nav ul,
 nav .nav-links, 
 nav .links {
   position: absolute !important;
-  left: 50vw !important; 
-  top: 40px !important;  
+  left: 50vw !important;
+  top: 40px !important;
   transform: translate(-50%, -50%) !important; 
   
   display: flex !important;
@@ -135,16 +126,15 @@ nav .links {
   margin: 0 !important;
   padding: 0 !important;
   
-  /* SPREAD INCREASED: Max gap is now 6rem (approx 96px) */
-  gap: clamp(1.5rem, 5vw, 6rem) !important;
+  gap: clamp(1rem, 3.5vw, 4.5rem) !important;
   z-index: 10 !important;
   list-style: none !important;
 }
 
-/* Link Styling (Text + Icon Alignment) */
+/* Link Styling - INCREASED ITEM SIZE */
 .nav-link {
   font-family: var(--font-mono) !important;
-  font-size: clamp(0.65rem, 1.2vw, 0.82rem) !important; 
+  font-size: clamp(0.85rem, 1.5vw, 1rem) !important; /* Increased base size for better readability */
   font-weight: 500 !important;
   color: var(--color-text-muted) !important;
   text-decoration: none !important;
@@ -153,20 +143,6 @@ nav .links {
   white-space: nowrap !important;
   position: relative !important;
   transition: color 0.25s ease !important;
-  
-  /* ICON ALIGNMENT FIX */
-  display: inline-flex !important;
-  align-items: center !important;
-  gap: 0.4rem !important; /* Space between icon and text */
-}
-
-/* ICON SIZING FIX (Forces SVGs/Images inside nav to scale properly) */
-.nav-link svg, 
-.nav-link img, 
-.nav-link i {
-  height: 1.2em !important; /* Perfect proportion to font size */
-  width: auto !important;
-  fill: currentColor !important; /* Matches hover colors */
 }
 
 .nav-link:hover { color: #fff !important; }
@@ -182,14 +158,16 @@ nav .links {
 }
 .nav-link:hover::after { transform: translateX(-50%) scale(1); }
 
-/* Mobile Navbar Physics */
+/* Mobile Navbar Fix */
 @media (max-width: 850px) {
   nav .timer, nav [data-timer] {
     display: none !important;
   }
   nav ul, nav .nav-links {
-    /* Slightly less spread on mobile so they fit */
-    gap: clamp(1rem, 3vw, 2.5rem) !important; 
+    gap: clamp(1.25rem, 4vw, 2rem) !important; /* Slightly wider gap on mobile for better touch targets */
+  }
+  .nav-link {
+    font-size: clamp(0.85rem, 2.5vw, 1rem) !important; /* Slightly larger on mobile for readability */
   }
 }
 
