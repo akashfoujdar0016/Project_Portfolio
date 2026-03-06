@@ -44,27 +44,29 @@ export function ContactSection() {
           </div>
 
           {/* Icons row directly under CONTACT */}
-          <div className="hack-card rounded-xl p-8 border-t-2 border-t-[#ff0033] flex flex-wrap gap-4 md:gap-6">
-            {socials.map((social) => (
-              <a
-                key={social.label}
-                href={social.href}
-                className="flex items-center gap-3 px-5 py-3 bg-[rgba(10,2,2,0.4)] border border-[rgba(255,0,51,0.15)] rounded-lg hover:border-[#ff0033] hover:bg-[rgba(255,0,51,0.05)] hover:shadow-[0_0_15px_rgba(255,0,51,0.15)] transition-all group min-w-[8rem]"
-                target={social.href.startsWith('http') ? '_blank' : undefined}
-                rel={social.href.startsWith('http') ? 'noreferrer' : undefined}
-              >
-                {social.kind === 'lucide' ? (
-                  <social.icon className="w-5 h-5 md:w-5 md:h-5 text-[rgba(180,180,180,0.6)] group-hover:text-[#ff0033] transition-colors" />
-                ) : (
-                  <i
-                    className={`${social.devicon} text-[20px] md:text-[20px] opacity-80 group-hover:opacity-100 transition-all`}
-                  ></i>
-                )}
-                <span className="font-mono text-[0.85rem] font-medium text-gray-300">
-                  {social.label}
-                </span>
-              </a>
-            ))}
+          <div className="hack-card rounded-xl p-5 md:p-8 border-t-2 border-t-[#ff0033]">
+            <div className="flex flex-wrap gap-3 md:gap-4">
+              {socials.map((social) => (
+                <a
+                  key={social.label}
+                  href={social.href}
+                  className="flex items-center justify-center gap-2.5 px-4 py-2.5 md:px-5 md:py-3 bg-[rgba(10,2,2,0.4)] border border-[rgba(255,0,51,0.15)] rounded-lg hover:border-[#ff0033] hover:bg-[rgba(255,0,51,0.05)] hover:shadow-[0_0_15px_rgba(255,0,51,0.15)] transition-all group"
+                  target={social.href.startsWith('http') ? '_blank' : undefined}
+                  rel={social.href.startsWith('http') ? 'noreferrer' : undefined}
+                >
+                  {social.kind === 'lucide' ? (
+                    <social.icon className="w-4 h-4 md:w-5 md:h-5 text-[rgba(180,180,180,0.6)] group-hover:text-[#ff0033] transition-colors" />
+                  ) : (
+                    <i
+                      className={`${social.devicon} text-[18px] md:text-[20px] opacity-80 group-hover:opacity-100 transition-all`}
+                    ></i>
+                  )}
+                  <span className="font-mono text-[0.8rem] md:text-[0.85rem] font-medium text-gray-300">
+                    {social.label}
+                  </span>
+                </a>
+              ))}
+            </div>
           </div>
         </div>
       </div>
