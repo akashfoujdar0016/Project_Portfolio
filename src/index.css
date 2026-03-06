@@ -1,26 +1,31 @@
 @import "tailwindcss";
 
-/* ── ORIGINAL THEME RESTORED ── */
+/* ── 1. THEME DEFINITION (Original "Rich Obsidian" Palette) ── */
 @theme {
   --font-space: 'Space Grotesk', sans-serif;
   --font-inter: 'Inter', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
   
-  /* Your Original Luxury Palette */
-  --color-brand: #ff0033;
-  --color-brand-muted: rgba(255, 0, 51, 0.1);
-  --color-bg-deep: #060608;
-  --color-border-subtle: rgba(255, 255, 255, 0.06);
-  --color-text-main: #e4e4e7;
-  --color-text-muted: #a1a1aa;
+  /* Luxury Brand Colors */
+  --color-brand: #ff0033; /* The Neon Red */
+  --color-brand-glow: rgba(255, 0, 51, 0.4);
+  --color-bg-deep: #060608; /* Deepest Black */
+  --color-bg-surface: #0c0c0f; /* Slightly lighter for cards */
+  --color-text-main: #e4e4e7; /* Zinc-200 */
+  --color-text-muted: #a1a1aa; /* Zinc-400 */
+  --color-border: rgba(255, 255, 255, 0.06);
+  
+  /* Physics */
+  --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* ── BASE RESET & ATMOSPHERE ── */
+/* ── 2. BASE RESET & ATMOSPHERE ── */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 html {
@@ -33,24 +38,117 @@ body {
   color: var(--color-text-muted);
   font-family: var(--font-inter);
   line-height: 1.7;
-  overflow-x: hidden;
   font-size: 16px;
+  overflow-x: hidden;
+  position: relative;
 }
 
-/* Restoring the "Grain" Texture (Subtle) */
+/* Custom Scrollbar */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--color-bg-deep); }
+::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-brand); }
+
+/* Selection */
+::selection { background: var(--color-brand); color: #fff; }
+
+/* Cinematic Grain (Subtle Texture) */
 body::before {
   content: '';
   position: fixed;
   inset: 0;
   z-index: 9999;
   pointer-events: none;
-  opacity: 0.05; /* Kept low for cleanliness */
+  opacity: 0.04; 
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
 }
 
-/* ── LAYOUT & TYPOGRAPHY ── */
+/* Ambient Lighting (Top Glow) */
+body::after {
+  content: '';
+  position: absolute;
+  top: -10vh;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80vw;
+  height: 60vh;
+  background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, rgba(6,6,8,0) 70%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* ── 3. NAVBAR (Fixed & Glass) ── */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 5%;
+  
+  background: rgba(6, 6, 8, 0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--color-border);
+  transition: all 0.3s ease;
+}
+
+nav .logo {
+  font-family: var(--font-space);
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: #fff;
+  text-decoration: none;
+  letter-spacing: -0.02em;
+}
+
+nav ul {
+  display: flex;
+  list-style: none;
+  gap: 2.5rem;
+}
+
+.nav-link {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  position: relative;
+  padding: 0.5rem 0;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #fff;
+}
+
+/* Red Dot Indicator */
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%) scale(0);
+  width: 4px;
+  height: 4px;
+  background: var(--color-brand);
+  border-radius: 50%;
+  transition: transform 0.3s var(--ease-premium);
+}
+.nav-link:hover::after {
+  transform: translateX(-50%) scale(1);
+}
+
+/* ── 4. LAYOUT & SECTIONS ── */
 section {
-  max-width: 80rem;
+  max-width: 85rem;
   margin: 0 auto;
   padding: 8rem 2rem;
   position: relative;
@@ -60,10 +158,10 @@ section {
   font-family: var(--font-mono);
   font-size: 0.75rem;
   font-weight: 600;
-  letter-spacing: 0.3em;
+  letter-spacing: 0.2em;
   color: var(--color-brand);
   text-transform: uppercase;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -71,107 +169,132 @@ section {
 
 .section-label::before {
   content: '';
-  width: 24px;
+  width: 30px;
   height: 1px;
   background: var(--color-brand);
 }
 
 .section-title {
   font-family: var(--font-space);
-  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
   font-weight: 600;
   color: #ffffff;
   line-height: 1.1;
-  letter-spacing: -0.03em; /* The "Expensive" tight tracking */
+  letter-spacing: -0.04em;
   margin-bottom: 3rem;
+  text-shadow: 0 0 40px rgba(0,0,0,0.5);
 }
 
-/* ── TECH STACK FIX (Small, Clean, Professional) ── */
-/* This container aligns them perfectly */
-.tech-stack-container {
+/* ── 5. TECH STACK (Small, Clean, Professional) ── */
+.tech-stack-container, 
+.tech-stack,
+.logos {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 2rem; /* Consistent spacing */
-  margin-top: 2.5rem;
-  padding: 1.25rem 2rem;
+  gap: 2.5rem; /* Generous spacing */
+  margin-top: 3rem;
+  padding: 1.25rem 2.5rem;
   
-  /* Glass Pill Look */
+  /* Glass Pill Container */
   background: rgba(255, 255, 255, 0.02);
-  border: 1px solid var(--color-border-subtle);
+  border: 1px solid var(--color-border);
   border-radius: 100px;
   width: fit-content;
+  backdrop-filter: blur(5px);
 }
 
-/* The Icons: Small, Uniform, Monochrome */
+/* Force Icons to be Small & Uniform */
 .tech-stack-container img, 
 .tech-stack-container svg,
-.tech-icon { 
-  height: 1.5rem !important; /* Forces 24px height - Sleek */
-  width: auto;
+.tech-stack img,
+.tech-stack svg {
+  height: 1.5rem !important; /* Forces 24px */
+  width: auto !important;
   object-fit: contain;
   
-  /* Default State: Greyed out & subtle */
-  filter: grayscale(100%) opacity(0.6);
-  transition: all 0.3s ease;
+  /* Monochromatic Default */
+  filter: grayscale(100%) opacity(0.5);
+  transition: all 0.4s var(--ease-premium);
   cursor: help;
 }
 
-/* Hover State: Full Brand Color or Original Color */
+/* Hover: Color & Lift */
 .tech-stack-container img:hover, 
 .tech-stack-container svg:hover,
-.tech-icon:hover {
+.tech-stack img:hover,
+.tech-stack svg:hover {
   filter: grayscale(0%) opacity(1);
-  transform: translateY(-2px);
+  transform: translateY(-3px) scale(1.1);
 }
 
-/* ── COMPONENTS (Restoring Original Style) ── */
-
-/* Glass Shell */
-.section-shell {
-  background: rgba(10, 10, 12, 0.6); /* Slightly darker for contrast */
-  backdrop-filter: blur(20px);
-  border: 1px solid var(--color-border-subtle);
-  padding: 4rem;
+/* ── 6. CARDS (Glassmorphism) ── */
+.card, .hack-card, .project-card {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.005) 100%);
+  border: 1px solid var(--color-border);
+  padding: 3rem;
   border-radius: 16px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.5s var(--ease-premium);
+}
+
+.card h3, .hack-card h3 {
+  font-family: var(--font-space);
+  color: #fff;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.card p, .hack-card p {
+  font-size: 1rem;
+  color: var(--color-text-muted);
+}
+
+/* Hover Effects */
+.card:hover, .hack-card:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 0, 51, 0.3); /* Brand Red Border */
+  transform: translateY(-5px);
   box-shadow: 0 20px 40px -10px rgba(0,0,0,0.5);
 }
 
-/* Cards */
-.hack-card {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.0) 100%);
-  border: 1px solid var(--color-border-subtle);
-  padding: 2.5rem;
-  border-radius: 12px;
-  transition: all 0.4s ease;
-  position: relative;
-  overflow: hidden;
+/* ── 7. CONTACT SECTION (Spacious) ── */
+.contact-section, .footer-section {
+  text-align: center;
+  padding: 10rem 0;
 }
 
-.hack-card h3 {
-  font-family: var(--font-space);
-  color: #fff;
-  font-size: 1.25rem;
-  margin-bottom: 0.75rem;
+.contact-icons, .social-links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4rem; /* 64px Spacing - The "Expensive" Look */
+  margin-top: 4rem;
 }
 
-.hack-card:hover {
-  border-color: rgba(255, 0, 51, 0.3); /* Your Brand Red */
-  transform: translateY(-5px);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
-}
-
-/* ── NAVIGATION ── */
-.nav-link {
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  color: var(--color-text-muted);
+.contact-icons a, .social-links a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-decoration: none;
-  margin-right: 2rem;
-  transition: color 0.3s ease;
-  position: relative;
+  color: var(--color-text-muted);
+  transition: all 0.3s ease;
 }
 
-.nav-link:hover {
-  color: var(--color-brand); /* Brand Red hover */
+.contact-icons svg, .contact-icons img, .social-links svg {
+  height: 2rem; /* 32px */
+  width: auto;
+  fill: currentColor;
+  transition: transform 0.3s ease;
+}
+
+/* Hover: Brand Red + Glow */
+.contact-icons a:hover, .social-links a:hover {
+  color: var(--color-brand);
+  transform: translateY(-5px);
+}
+
+.contact-icons a:hover svg {
+  filter: drop-shadow(0 0 10px var(--color-brand-glow));
 }
