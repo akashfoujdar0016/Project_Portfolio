@@ -1,265 +1,95 @@
-@import "tailwindcss";
-
-@theme {
-  --font-space: 'Space Grotesk', sans-serif;
-  --font-inter: 'Inter', sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
-  
-  /* ── Preserved Theme ── */
-  --color-brand: #ff0033;
-  --color-brand-muted: rgba(255, 0, 51, 0.08); /* Lower opacity for subtlety */
-  --color-bg-deep: #060608;
-  --color-text-main: #e4e4e7; /* Zinc-200 for better contrast than generic gray */
-  --color-text-muted: #a1a1aa;
-  
-  /* ── The "Expensive" Easing Curve ── */
-  --ease-premium: cubic-bezier(0.16, 1, 0.3, 1); /* Snappy start, slow smooth finish */
-}
-
-/* ── Base Reset & High-End Defaults ── */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  /* Premium rendering settings */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
-}
-
-html {
-  scroll-behavior: smooth;
-  background-color: var(--color-bg-deep);
-}
-
+/* ── GLOBAL LIGHTING (New: Makes the page pop) ── */
 body {
-  background-color: var(--color-bg-deep);
-  color: var(--color-text-muted);
-  font-family: var(--font-inter);
-  overflow-x: hidden;
-  line-height: 1.75; /* Increased from 1.6 for readability */
-  font-size: 1.05rem; /* Slightly larger base size */
+  /* ... keep your existing body styles ... */
+  
+  /* This creates a "Stage Light" effect, darker edges, brighter center */
+  background: radial-gradient(
+    circle at 50% 0%, 
+    rgba(20, 20, 25, 1) 0%, 
+    var(--color-bg-deep) 60%
+  );
 }
 
-/* Custom Scrollbar (Essential for premium feel) */
-::-webkit-scrollbar {
-  width: 8px;
-}
-::-webkit-scrollbar-track {
-  background: var(--color-bg-deep);
-}
-::-webkit-scrollbar-thumb {
-  background: #333;
-  border-radius: 4px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: var(--color-brand);
-}
-
-/* High-contrast selection */
-::selection {
-  background: var(--color-brand);
-  color: #ffffff;
-}
-
-/* ── Sophisticated Atmosphere ── */
-
-/* 1. Refined Grain: Lower opacity makes it subconscious, not dirty */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  z-index: 9999;
-  pointer-events: none;
-  opacity: 0.035; /* Drastically reduced from 0.25 */
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-  mix-blend-mode: overlay;
-}
-
-/* 2. Ambient Lighting: A subtle top-light to create depth */
-body::after {
-  content: '';
-  position: absolute;
-  top: -10vh;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 80vw;
-  height: 50vh;
-  background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, rgba(6,6,8,0) 70%);
-  pointer-events: none;
-  z-index: -1;
-}
-
-/* ── Typography Refinement ── */
-section {
-  max-width: 85rem; /* Slightly tighter for better reading lines */
-  margin: 0 auto;
-  padding: 12rem 2rem; /* More vertical breathing room */
-  position: relative;
-}
-
-.section-label {
-  font-family: var(--font-mono);
-  font-size: 0.75rem; /* Slightly larger */
-  font-weight: 500;
-  letter-spacing: 0.2em; /* Reduced spacing for tighter lockup */
-  color: var(--color-brand);
-  text-transform: uppercase;
-  margin-bottom: 2rem;
+/* ── TECH STACK (Refined, Small, Professional) ── */
+.tech-stack-container {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
-  opacity: 0.9;
-}
-
-/* Replaced the "dash" with a more technical indicator */
-.section-label::before {
-  content: '';
-  width: 6px;
-  height: 6px;
-  background: var(--color-brand);
-  box-shadow: 0 0 10px var(--color-brand);
-}
-
-.section-title {
-  font-family: var(--font-space);
-  /* Uses clamp for fluid typography */
-  font-size: clamp(3rem, 6vw, 5.5rem); 
-  font-weight: 600; /* Dropped from 700 for a cleaner look */
-  color: #ffffff;
-  line-height: 1.1;
-  letter-spacing: -0.04em; /* Negative tracking is key for "Expensive" headers */
-  margin-bottom: 4rem;
-  max-width: 20ch; /* Limits width for readability */
-}
-
-/* ── The "Section Shell" (Premium Glass) ── */
-/* Logic: Uses multiple shadows to create physical depth */
-.section-shell {
-  background: linear-gradient(180deg, rgba(20, 20, 24, 0.6) 0%, rgba(20, 20, 24, 0.3) 100%);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  /* Top border is brighter (light source), bottom is dark */
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
-  border-left: 1px solid rgba(255, 255, 255, 0.03);
-  border-right: 1px solid rgba(255, 255, 255, 0.03);
+  gap: 2.5rem; /* Generous spacing between small icons */
+  margin-top: 3rem;
+  padding: 1.5rem 3rem;
   
-  padding: 6rem;
-  border-radius: 24px; /* Modern rounded corners */
-  
-  /* Deep, layered shadow */
-  box-shadow: 
-    0 40px 80px -20px rgba(0,0,0,0.8),
-    inset 0 0 0 1px rgba(255,255,255,0.02);
-    
-  transition: transform 0.8s var(--ease-premium), box-shadow 0.8s var(--ease-premium), border-color 0.4s ease;
-  will-change: transform;
-}
-
-.section-shell:hover {
-  border-top-color: rgba(255, 255, 255, 0.15);
-  transform: translateY(-4px) scale(1.002);
-  box-shadow: 
-    0 50px 100px -20px rgba(0,0,0,0.9),
-    inset 0 0 20px rgba(255,255,255,0.02);
-}
-
-/* ── Professional Cards (Bento Grid Style) ── */
-.hack-card {
-  /* Gradient background instead of flat color */
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.005) 100%);
+  /* A distinct "Glass Pill" container for the stack */
+  background: rgba(255, 255, 255, 0.02);
   border: 1px solid rgba(255, 255, 255, 0.05);
-  padding: 3.5rem;
-  border-radius: 16px;
+  border-radius: 9999px; /* Pill shape */
+  width: fit-content;
+  backdrop-filter: blur(10px);
+}
+
+/* Target your images or SVGs inside the tech stack */
+.tech-stack-container img, 
+.tech-stack-container svg {
+  height: 1.5rem; /* Approximately 24px - Very sleek/small */
+  width: auto;
+  object-fit: contain;
+  
+  /* The "Stealth" Look: Grayscale and dimmed by default */
+  filter: grayscale(100%) brightness(0.7);
+  opacity: 0.6;
+  
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: help; /* Adds a nice cursor on hover */
+}
+
+/* Hover Effects: The icon lights up */
+.tech-stack-container img:hover,
+.tech-stack-container svg:hover {
+  filter: grayscale(0%) brightness(1.2); /* Full color + slightly bright */
+  opacity: 1;
+  transform: translateY(-2px) scale(1.1); /* Subtle lift */
+}
+
+/* ── ATTRACTION UPGRADES (Visual Polish) ── */
+
+/* 1. Glowing Text for Main Title */
+.section-title {
+  /* ... keep existing styles ... */
+  text-shadow: 0 0 40px rgba(255, 255, 255, 0.1); /* Soft bloom */
+}
+
+/* 2. Better Button/Link Call to Action */
+.cta-button {
+  display: inline-flex;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: transparent;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: all 0.4s ease;
   position: relative;
   overflow: hidden;
-  transition: all 0.5s var(--ease-premium);
-  cursor: pointer;
-  group: hack-card;
 }
 
-/* Title inside card upgrade */
-.hack-card h3 {
-    color: #fff;
-    font-family: var(--font-space);
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-    transition: color 0.3s ease;
+.cta-button:hover {
+  border-color: var(--color-brand);
+  background: rgba(255, 0, 51, 0.05);
+  box-shadow: 0 0 30px var(--color-brand-muted);
 }
 
-.hack-card p {
-    color: var(--color-text-muted);
-    font-size: 0.95rem;
-    transition: color 0.3s ease;
-}
-
-/* The hover accent is now a subtle wash, not just a border */
-.hack-card::before {
+/* 3. Subtle Grid Background (Optional but adds structure) */
+.section-shell::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 0, 51, 0.06), transparent 40%);
-  opacity: 0;
-  transition: opacity 0.5s ease;
-  z-index: 0;
-}
-
-.hack-card:hover {
-  background: rgba(255, 255, 255, 0.04);
-  border-color: rgba(255, 255, 255, 0.1);
-  transform: translateY(-4px);
-}
-
-.hack-card:hover h3 {
-    color: var(--color-brand);
-}
-.hack-card:hover p {
-    color: var(--color-text-main);
-}
-
-.hack-card:hover::before {
-  opacity: 1;
-}
-
-/* ── Navigation (Minimalist) ── */
-nav {
-    display: flex;
-    gap: 3rem;
-    padding: 2rem 0;
-}
-
-.nav-link {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  font-weight: 500;
-  color: #71717a;
-  text-decoration: none;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  transition: color 0.4s ease;
-  padding: 0.5rem 0;
-  position: relative;
-}
-
-/* Dot indicator instead of underline (More modern) */
-.nav-link::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: -12px;
-  transform: translateY(-50%) scale(0);
-  width: 4px;
-  height: 4px;
-  background: var(--color-brand);
-  border-radius: 50%;
-  transition: transform 0.4s var(--ease-premium);
-}
-
-.nav-link:hover {
-  color: #fff;
-}
-
-.nav-link:hover::before {
-  transform: translateY(-50%) scale(1);
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px; /* Size of the grid squares */
+  opacity: 0.2;
+  z-index: -1;
+  mask-image: linear-gradient(to bottom, black 40%, transparent 100%); /* Fades out at bottom */
 }
