@@ -60,14 +60,13 @@ body::before {
 }
 
 /* ─────────────────────────────────────────────────────────
-   3) NAVBAR: ABSOLUTE COORDINATE METHOD
-   This forces centering by ignoring all HTML wrappers.
+   3) NAVBAR: ABSOLUTE COORDINATE METHOD (CENTERED)
    ───────────────────────────────────────────────────────── */
 nav {
   position: fixed !important;
   top: 0 !important;
   left: 0 !important;
-  width: 100vw !important; /* Viewport width */
+  width: 100vw !important;
   height: 80px !important;
   z-index: 1000 !important;
   
@@ -114,8 +113,8 @@ nav ul,
 nav .nav-links, 
 nav .links {
   position: absolute !important;
-  left: 50vw !important; /* Exactly 50% of the screen */
-  top: 40px !important;  /* Exactly half of the 80px height */
+  left: 50vw !important;
+  top: 40px !important;
   transform: translate(-50%, -50%) !important; 
   
   display: flex !important;
@@ -162,7 +161,7 @@ nav .links {
 /* Mobile Navbar Physics */
 @media (max-width: 850px) {
   nav .timer, nav [data-timer] {
-    display: none !important; /* Hide timer on mobile to make room for links */
+    display: none !important;
   }
   nav ul, nav .nav-links {
     gap: clamp(0.75rem, 2vw, 1.5rem) !important; 
@@ -228,27 +227,35 @@ section {
   background: rgba(255,255,255,0.05);
 }
 
-/* ── 7) TECH STACK (Small Icons) ── */
+/* ── 7) TECH STACK (FIXED SMALL ICON SIZE) ── */
+/* Icons are now smaller (1.25rem / 20px) for a clean, professional look */
 .tech-stack-container, .tech-stack {
-  display: flex; flex-wrap: wrap; align-items: center; gap: 2.5rem;
+  display: flex; flex-wrap: wrap; align-items: center;
+  gap: clamp(1.75rem, 3vw, 2.5rem); /* Spread a little bit more */
   margin-top: 3rem; padding: 1.25rem 2.5rem;
   background: rgba(255, 255, 255, 0.02);
   border: 1px solid var(--color-border-subtle);
   border-radius: 999px;
   width: fit-content;
 }
-.tech-stack-container img, .tech-stack-container svg {
-  height: 1.5rem !important; /* Forces 24px */
+
+.tech-stack-container img, .tech-stack-container svg,
+.tech-stack img, .tech-stack svg {
+  height: 1.25rem !important; /* 20px - Fixed smaller size */
   width: auto !important;
+  object-fit: contain;
   filter: grayscale(100%) opacity(0.55);
   transition: all 0.35s ease;
 }
-.tech-stack-container img:hover, .tech-stack-container svg:hover {
+
+.tech-stack-container img:hover, .tech-stack-container svg:hover,
+.tech-stack img:hover, .tech-stack svg:hover {
   filter: grayscale(0%) opacity(1);
-  transform: translateY(-3px) scale(1.1);
+  transform: translateY(-2px) scale(1.1);
 }
 
-/* ── 8) CONTACT SECTION (Spacious) ── */
+/* ── 8) CONTACT SECTION (SPREAD ICONS A LITTLE BIT MORE) ── */
+/* Increased gap for GitHub, LinkedIn, LeetCode, Email */
 .contact-section, footer, #contact {
   text-align: center;
   padding: 8rem 0;
@@ -259,7 +266,7 @@ section {
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-  gap: clamp(3.5rem, 7vw, 7rem) !important; /* HUGE SPACING */
+  gap: clamp(4rem, 8vw, 8rem) !important; /* Spread a little bit more */
   margin-top: 4rem;
   width: 100%;
 }
