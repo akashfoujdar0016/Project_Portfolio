@@ -1,8 +1,9 @@
 export function Footer() {
   return (
     <footer
-      className="relative mt-24 md:mt-40 py-5 px-6"
+      className="relative py-5 px-6"
       style={{
+        marginTop: '16rem',
         background: 'rgba(6, 8, 10, 0.97)',
         borderTop: '1px solid rgba(0, 255, 136, 0.12)',
       }}
