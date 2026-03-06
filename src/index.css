@@ -1,6 +1,8 @@
 @import "tailwindcss";
 
-/* portfolio */
+/* =========================
+   PORTFOLIO THEME
+========================= */
 
 @theme {
   --font-space: 'Space Grotesk', sans-serif;
@@ -18,17 +20,32 @@ html{
   scroll-behavior:smooth;
 }
 
+/* =========================
+   BODY + BACKGROUND DEPTH
+========================= */
+
 body{
-  background-color:#030305;
+
+  background:
+  radial-gradient(circle at 20% 10%, rgba(255,0,51,.08), transparent 40%),
+  radial-gradient(circle at 80% 70%, rgba(255,0,51,.05), transparent 45%),
+  #030305;
+
   color:#c0c0c0;
+
   font-family:'Inter',sans-serif;
+
   overflow-x:hidden;
+
   line-height:1.7;
 }
 
-/* ── CRT scanlines overlay ── */
+/* =========================
+   CRT EFFECT
+========================= */
 
 body::before{
+
   content:'';
   position:fixed;
   inset:0;
@@ -44,9 +61,8 @@ body::before{
   );
 }
 
-/* ── CRT vignette ── */
-
 body::after{
+
   content:'';
   position:fixed;
   inset:0;
@@ -60,10 +76,12 @@ body::after{
   );
 }
 
-/* ── Scrollbar ── */
+/* =========================
+   SCROLLBAR
+========================= */
 
 ::-webkit-scrollbar{
-  width:3px;
+  width:4px;
 }
 
 ::-webkit-scrollbar-track{
@@ -78,53 +96,106 @@ body::after{
   background:#ff0033;
 }
 
-/* ── SECTION LAYOUT (REPLACES CONTAINER) ── */
+/* =========================
+   SECTION LAYOUT
+========================= */
 
 section{
+
   max-width:80rem;
+
   margin-left:auto;
   margin-right:auto;
 
   padding-top:6rem;
   padding-bottom:6rem;
+
   padding-left:1.8rem;
   padding-right:1.8rem;
 
   position:relative;
-}
 
-/* spacing between sections */
+  border-bottom:1px solid rgba(255,0,51,.08);
+}
 
 section + section{
   margin-top:3rem;
 }
 
-/* section header */
+/* =========================
+   SECTION HEADER
+========================= */
 
 .section-header{
-  margin-bottom:2rem;
+  margin-bottom:2.2rem;
 }
 
-/* section title */
+.section-label{
+
+  font-family:'JetBrains Mono',monospace;
+
+  font-size:.65rem;
+
+  font-weight:700;
+
+  letter-spacing:.35em;
+
+  color:#ff0033;
+
+  text-transform:uppercase;
+
+  text-shadow:0 0 12px rgba(255,0,51,.6);
+}
+
+/* =========================
+   SECTION TITLES
+========================= */
 
 .section-title{
+
   font-family:'Space Grotesk',sans-serif;
-  font-size:clamp(1.6rem,3vw,2.4rem);
-  letter-spacing:0.02em;
+
+  font-size:clamp(1.8rem,3vw,2.6rem);
+
+  font-weight:700;
+
+  letter-spacing:.02em;
+
   margin-top:.4rem;
+
+  color:#e6e6e6;
+
+  text-shadow:0 0 18px rgba(255,0,51,.35);
 }
 
-/* section paragraph spacing */
+/* =========================
+   TYPOGRAPHY
+========================= */
 
-section p{
+p{
+
+  font-size:.97rem;
+
+  color:#b8b8b8;
+
+  line-height:1.8;
+
   margin-bottom:1.4rem;
+
+  max-width:65ch;
 }
 
-section p:last-child{
+p:last-child{
   margin-bottom:0;
 }
 
-/* ── Section fade ── */
+strong{
+  color:#ff4a5e;
+}
+
+/* =========================
+   SECTION FADE
+========================= */
 
 .section-fade{
   opacity:0;
@@ -137,7 +208,168 @@ section p:last-child{
   transform:translateY(0);
 }
 
-/* ── Typing cursor ── */
+/* =========================
+   NAV LINKS
+========================= */
+
+.nav-link{
+
+  position:relative;
+
+  font-family:'JetBrains Mono',monospace;
+
+  font-size:.85rem;
+
+  font-weight:600;
+
+  text-decoration:none;
+
+  color:rgba(180,180,180,.55);
+
+  letter-spacing:.16em;
+
+  text-transform:uppercase;
+
+  transition:
+  color .25s ease,
+  text-shadow .25s ease,
+  transform .25s ease;
+
+  padding:4px 0;
+}
+
+.nav-link:hover{
+
+  color:#ff5a6a;
+
+  text-shadow:0 0 12px rgba(255,0,51,.45);
+
+  transform:translateY(-1px);
+}
+
+.nav-link:focus-visible{
+
+  outline:1px dashed rgba(255,0,51,.6);
+
+  outline-offset:4px;
+}
+
+/* =========================
+   RED GLOW TEXT
+========================= */
+
+.red-glow{
+
+  color:#ff0033;
+
+  text-shadow:
+  0 0 20px rgba(255,0,51,.7),
+  0 0 40px rgba(255,0,51,.3);
+}
+
+/* =========================
+   CARDS
+========================= */
+
+.hack-card{
+
+  background:
+  linear-gradient(
+  145deg,
+  rgba(18,3,3,.9),
+  rgba(8,2,2,.95)
+  );
+
+  border:1px solid rgba(255,0,51,.15);
+
+  border-radius:3px;
+
+  padding:1.8rem;
+
+  transition:
+  border-color .3s,
+  box-shadow .3s,
+  transform .3s;
+
+  position:relative;
+}
+
+.hack-card:hover{
+
+  border-color:rgba(255,0,51,.45);
+
+  box-shadow:
+  0 12px 35px rgba(0,0,0,.7),
+  0 0 35px rgba(255,0,51,.12);
+
+  transform:translateY(-4px);
+}
+
+/* =========================
+   SECTION SHELL
+========================= */
+
+.section-shell{
+
+  background:
+  linear-gradient(
+  145deg,
+  rgba(20,4,4,.9),
+  rgba(8,8,12,.65)
+  );
+
+  border:1px solid rgba(255,0,51,.35);
+
+  border-radius:3px;
+
+  padding:2.6rem;
+
+  line-height:1.8;
+
+  box-shadow:
+  0 0 60px rgba(255,0,51,.18),
+  0 24px 80px rgba(0,0,0,.7);
+
+  transition:all .35s ease;
+}
+
+.section-shell:hover{
+
+  border-color:rgba(255,0,51,.65);
+
+  box-shadow:
+  0 0 120px rgba(255,0,51,.35),
+  0 40px 120px rgba(0,0,0,.82);
+
+  transform:translateY(-4px);
+}
+
+/* =========================
+   WORK SECTION
+========================= */
+
+.work-header{
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:flex-start;
+
+  margin-bottom:.9rem;
+
+  flex-wrap:wrap;
+
+  gap:.6rem;
+}
+
+.work-role{
+  margin-bottom:.8rem;
+}
+
+/* =========================
+   CURSOR BLINK
+========================= */
 
 .cursor-blink{
   animation:blink .8s step-end infinite;
@@ -154,7 +386,9 @@ section p:last-child{
   }
 }
 
-/* ── Glitch animation ── */
+/* =========================
+   GLITCH EFFECT
+========================= */
 
 .glitch{
   position:relative;
@@ -163,14 +397,19 @@ section p:last-child{
 
 .glitch::before,
 .glitch::after{
+
   content:attr(data-text);
+
   position:absolute;
+
   top:0;
   left:0;
+
   width:100%;
 }
 
 .glitch::before{
+
   color:#ff0033;
 
   animation:glitchTop 5s infinite;
@@ -181,6 +420,7 @@ section p:last-child{
 }
 
 .glitch::after{
+
   color:#990000;
 
   animation:glitchBot 5s infinite;
@@ -196,17 +436,9 @@ section p:last-child{
     transform:translate(0);
   }
 
-  91%{
-    transform:translate(-1px,1px);
-  }
-
-  92%{
-    transform:translate(1px,-1px);
-  }
-
-  93%{
-    transform:translate(0);
-  }
+  91%{transform:translate(-1px,1px);}
+  92%{transform:translate(1px,-1px);}
+  93%{transform:translate(0);}
 }
 
 @keyframes glitchTop{
@@ -251,140 +483,4 @@ section p:last-child{
   91%{
     opacity:0;
   }
-}
-
-/* ── Nav link ── */
-
-.nav-link{
-  position:relative;
-
-  font-family:'JetBrains Mono',monospace;
-  font-size:.85rem;
-  font-weight:600;
-
-  text-decoration:none;
-
-  color:rgba(180,180,180,.55);
-
-  letter-spacing:.16em;
-  text-transform:uppercase;
-
-  transition:color .25s ease,text-shadow .25s ease;
-
-  padding:4px 0;
-}
-
-.nav-link:focus-visible{
-  outline:1px dashed rgba(255,0,51,.6);
-  outline-offset:4px;
-}
-
-.nav-link:hover{
-  color:#ff5a6a;
-  text-shadow:0 0 12px rgba(255,0,51,.45);
-}
-
-/* ── Section label ── */
-
-.section-label{
-  font-family:'JetBrains Mono',monospace;
-
-  font-size:.62rem;
-  font-weight:700;
-
-  letter-spacing:.35em;
-
-  color:#ff0033;
-
-  text-transform:uppercase;
-
-  text-shadow:0 0 12px rgba(255,0,51,.6);
-}
-
-/* ── Red glow text ── */
-
-.red-glow{
-  color:#ff0033;
-
-  text-shadow:
-  0 0 20px rgba(255,0,51,.7),
-  0 0 40px rgba(255,0,51,.3);
-}
-
-/* ── Cards ── */
-
-.hack-card{
-
-  background:rgba(10,2,2,.85);
-
-  border:1px solid rgba(255,0,51,.12);
-
-  border-radius:2px;
-
-  padding:1.8rem;
-
-  transition:
-  border-color .3s,
-  box-shadow .3s,
-  transform .3s;
-}
-
-.hack-card:hover{
-
-  border-color:rgba(255,0,51,.35);
-
-  box-shadow:
-  0 0 25px rgba(255,0,51,.08),
-  0 8px 30px rgba(0,0,0,.6);
-
-  transform:translateY(-3px);
-}
-
-/* ── Section shell ── */
-
-.section-shell{
-
-  background:rgba(8,8,12,.55);
-
-  border:1px solid rgba(255,0,51,.35);
-
-  border-radius:2px;
-
-  padding:2.6rem;
-
-  line-height:1.8;
-
-  box-shadow:
-  0 0 55px rgba(255,0,51,.22),
-  0 24px 80px rgba(0,0,0,.7);
-
-  transition:all .35s ease;
-}
-
-.section-shell:hover{
-
-  border-color:rgba(255,0,51,.65);
-
-  box-shadow:
-  0 0 120px rgba(255,0,51,.35),
-  0 40px 120px rgba(0,0,0,.82);
-
-  transform:translateY(-4px);
-}
-
-/* ── Work section layout ── */
-
-.work-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-start;
-
-  margin-bottom:.8rem;
-
-  flex-wrap:wrap;
-  gap:.5rem;
-}
-
-.work-role{
-  margin-bottom:.8rem;
 }
