@@ -9,8 +9,8 @@
   --color-brand: #ff0033;
   --color-brand-muted: rgba(255, 0, 51, 0.10);
   --color-bg-deep: #060608;
-  --color-border-subtle: rgba(255, 255, 255, 0.06);
 
+  --color-border-subtle: rgba(255, 255, 255, 0.06);
   --color-text-main: #e4e4e7;
   --color-text-muted: #a1a1aa;
 
@@ -42,7 +42,7 @@ body {
   width: 100%;
 }
 
-/* Make anchor jumps account for fixed navbar */
+/* Anchor jumps account for fixed navbar */
 section,
 [id] {
   scroll-margin-top: 110px;
@@ -71,12 +71,11 @@ body::before {
   mix-blend-mode: overlay;
 }
 
-/* ──────────────────────────────────────────────────────────────
-   3) NAVBAR (YOUR EXACT CONDITION)
-   - HOME/ABOUT/TECH STACK/PROJECTS/CONTACT: perfectly centered
-   - TIMER: stays at the rightmost corner (same position)
-   - NO overlap: center group gets side padding "safe area"
-   ────────────────────────────────────────────────────────────── */
+/* ─────────────────────────────────────────────
+   3) NAVBAR — centered lane (spread like screenshot)
+   - Links spread across a centered lane
+   - Timer pinned rightmost
+   ───────────────────────────────────────────── */
 nav {
   position: fixed;
   top: 0;
@@ -85,22 +84,22 @@ nav {
   height: 80px;
   z-index: 1000;
 
+  padding: 0 5%;
   background: rgba(6, 6, 8, 0.90);
   backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--color-border-subtle);
-
-  /* positioning context */
-  position: relative;
-
-  /* keep your original left/right breathing room */
-  padding: 0 5%;
 
   display: flex;
   align-items: center;
   justify-content: space-between;
 
-  /* controls how much empty space we reserve so links never touch logo/timer */
-  --nav-safe: clamp(160px, 18vw, 380px);
+  /* positioning context */
+  position: relative;
+
+  /* reserve edges so lane never hits logo/timer */
+  --nav-safe: clamp(170px, 20vw, 420px);
+  /* controls how wide the center “spread” feels */
+  --nav-lane-max: 860px;
 }
 
 /* Logo (left) */
@@ -115,7 +114,7 @@ nav .logo {
   z-index: 30;
 }
 
-/* Timer pinned to the rightmost corner (like your screenshot) */
+/* Timer (rightmost corner) */
 nav .timer,
 nav .nav-timer,
 nav [data-timer] {
@@ -131,40 +130,37 @@ nav [data-timer] {
   white-space: nowrap;
 }
 
-/*
-  Center items:
-  IMPORTANT CHANGE from earlier attempts:
-  - we center using `inset: 0` + `justify-content: center`
-  - so even if your UL/DIV has `w-full` from Tailwind, it still centers correctly
-  - we add padding left/right (safe area) so it cannot overlap timer/logo
-*/
+/* Center lane container (supports ul or div wrappers) */
 nav ul,
 nav .nav-links,
 nav .links,
 nav .menu {
   position: absolute;
-  inset: 0;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 
+  height: 100%;
   display: flex;
   align-items: center;
-  justify-content: center;
+
+  /* Spread across lane like your reference */
+  justify-content: space-between;
 
   list-style: none;
   margin: 0 !important;
+  padding: 0 !important;
 
-  /* safe padding to avoid overlap with logo/timer */
-  padding: 0 var(--nav-safe) !important;
-
-  /* spread items in the center */
-  gap: clamp(1.25rem, 3.6vw, 4.5rem) !important;
+  /* Centered lane width (constrained) */
+  width: min(var(--nav-lane-max), calc(100% - (2 * var(--nav-safe))));
 
   z-index: 10;
 
-  /* prevents this full-width layer from blocking logo/timer clicks */
+  /* Don’t block logo/timer clicks */
   pointer-events: none;
 }
 
-/* Re-enable clicks only on the actual items/links */
+/* Re-enable clicking on actual items */
 nav ul li,
 nav ul a,
 nav .nav-links a,
@@ -172,6 +168,9 @@ nav .links a,
 nav .menu a {
   pointer-events: auto;
 }
+
+/* Prevent flex stretching (especially in ul) */
+nav ul li { flex: 0 0 auto; }
 
 /* Link styling */
 .nav-link {
@@ -182,14 +181,14 @@ nav .menu a {
   text-decoration: none;
   text-transform: uppercase;
   letter-spacing: 0.14em;
-  position: relative;
   white-space: nowrap;
+  position: relative;
+  padding: 0.25rem 0.25rem;
   transition: color 0.25s ease;
 }
 
 .nav-link:hover { color: #fff; }
 
-/* Red dot indicator */
 .nav-link::after {
   content: "";
   position: absolute;
@@ -204,14 +203,11 @@ nav .menu a {
 }
 .nav-link:hover::after { transform: translateX(-50%) scale(1); }
 
-/* Responsive: reduce safe area + gap so it still fits */
+/* Responsive tuning */
 @media (max-width: 900px) {
-  nav { --nav-safe: clamp(120px, 22vw, 240px); }
-  nav ul,
-  nav .nav-links,
-  nav .links,
-  nav .menu {
-    gap: clamp(0.75rem, 2.5vw, 1.5rem) !important;
+  nav {
+    --nav-safe: clamp(120px, 22vw, 260px);
+    --nav-lane-max: 640px;
   }
   .nav-link { font-size: 0.74rem; letter-spacing: 0.12em; }
 }
@@ -266,7 +262,10 @@ section {
   box-shadow:
     0 30px 60px -12px rgba(0,0,0,0.55),
     inset 0 1px 1px rgba(255,255,255,0.05);
-  transition: transform 0.6s var(--ease-premium), box-shadow 0.6s var(--ease-premium), border-color 0.35s ease;
+  transition:
+    transform 0.6s var(--ease-premium),
+    box-shadow 0.6s var(--ease-premium),
+    border-color 0.35s ease;
 }
 
 .section-shell:hover {
@@ -283,7 +282,10 @@ section {
   border: 1px solid var(--color-border-subtle);
   padding: 3rem;
   border-radius: 16px;
-  transition: transform 0.5s var(--ease-premium), border-color 0.35s ease, background 0.35s ease;
+  transition:
+    transform 0.5s var(--ease-premium),
+    border-color 0.35s ease,
+    background 0.35s ease;
   position: relative;
   overflow: hidden;
 }
@@ -323,7 +325,10 @@ section {
   object-fit: contain;
 
   filter: grayscale(100%) opacity(0.55);
-  transition: transform 0.35s var(--ease-premium), filter 0.35s ease, opacity 0.35s ease;
+  transition:
+    transform 0.35s var(--ease-premium),
+    filter 0.35s ease,
+    opacity 0.35s ease;
 }
 
 .tech-stack-container img:hover,
@@ -350,7 +355,7 @@ footer {
   align-items: center;
   flex-wrap: wrap;
 
-  gap: clamp(3.5rem, 7vw, 7rem) !important; /* BIG spacing */
+  gap: clamp(3.5rem, 7vw, 7rem) !important;
   margin-top: 4rem;
   width: 100%;
 }
