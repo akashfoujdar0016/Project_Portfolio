@@ -1,13 +1,3 @@
-I apologize. That likely happened because the "lighting" and "physics" effects clashed with your existing HTML structure, causing elements to overlap or disappear behind background layers.
-
-Here is a **Stable, Safe, and Polished** version.
-
-**Instructions:**
-1.  **Delete** all the previous CSS I gave you.
-2.  **Paste** this exact block below.
-3.  This code is "defensive"—it forces images to be small (preventing layout breaks), ensures text is readable, and removes the risky background overlaps while keeping the $6,000 premium aesthetic.
-
-```css
 @import "tailwindcss";
 
 /* ── SAFE & PREMIUM THEME CONFIGURATION ── */
@@ -161,11 +151,3 @@ button:hover, .btn:hover, a.button:hover {
   background: rgba(255, 0, 51, 0.1);
   color: white;
 }
-```
-
-### What I fixed:
-
-1.  **Restored `z-index`:** I added `z-index: 10` to the section containers. This ensures your text and buttons are always clickable and sitting *on top* of any background effects.
-2.  **Forced Image Constraints:** In the `.tech-stack` section, I added `height: 24px !important`. This guarantees your icons will be small and sleek, even if the original image files are huge.
-3.  **Removed "Experimental" Physics:** I removed the complex `cubic-bezier` transitions and heavy blur filters that might have been causing lag or layout shifting on your browser.
-4.  **Color Safety:** Changed text colors to high-contrast variables so nothing blends into the background.
