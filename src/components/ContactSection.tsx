@@ -32,7 +32,7 @@ const socials: Array<
 
 export function ContactSection() {
   return (
-    <section id="contact" className="relative pt-32 pb-40 md:pt-56 md:pb-72 lg:pt-72 lg:pb-96 px-6 md:px-10 lg:px-16">
+    <section id="contact" className="relative" style={{ paddingTop: '6rem', paddingBottom: '4rem', paddingLeft: '1.5rem', paddingRight: '1.5rem' }}>
       <div className="w-full section-fade" style={{ maxWidth: '1400px', marginLeft: 'auto', marginRight: 'auto' }}>
         <div className="section-shell px-10 pt-16 pb-24 md:px-14 md:pt-20 md:pb-32">
           {/* Section header */}

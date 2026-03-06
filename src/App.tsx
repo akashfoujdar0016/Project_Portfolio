@@ -12,7 +12,7 @@ const sectionIds = ['home', 'about', 'tech-stack', 'projects', 'contact'];
 
 function SectionDivider() {
   return (
-    <div className="h-32 md:h-48 lg:h-64" />
+    <div style={{ height: '4rem' }} />
   );
 }
 
@@ -29,19 +29,19 @@ export function App() {
       <HeroSection />
 
       {/* Section spacing wrapper */}
-      <div className="mt-40 md:mt-64 lg:mt-80">
+      <div style={{ marginTop: '5rem' }}>
         <AboutSection />
-        
+
         <SectionDivider />
         <SkillsSection />
-        
+
         <SectionDivider />
         <ProjectsSection />
-        
+
         <SectionDivider />
         <ContactSection />
       </div>
-      
+
       <Footer />
     </div>
   );
