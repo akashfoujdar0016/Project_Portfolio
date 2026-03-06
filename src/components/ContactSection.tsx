@@ -4,36 +4,36 @@ const socials: Array<
   | { kind: 'lucide'; icon: any; label: string; href: string }
   | { kind: 'devicon'; devicon: string; label: string; href: string }
 > = [
-  {
-    kind: 'lucide',
-    icon: Github,
-    label: 'GitHub',
-    href: 'https://github.com/akashfoujdar0016',
-  },
-  {
-    kind: 'lucide',
-    icon: Linkedin,
-    label: 'LinkedIn',
-    href: 'https://www.linkedin.com/in/akash-foujdar-b04526326/',
-  },
-  {
-    kind: 'devicon',
-    devicon: 'devicon-leetcode-plain colored',
-    label: 'LeetCode',
-    href: 'https://leetcode.com/u/akashfoujdar0016/',
-  },
-  {
-    kind: 'lucide',
-    icon: Mail,
-    label: 'Email',
-    href: 'mailto:akashfoujdar16@gmail.com',
-  },
-];
+    {
+      kind: 'lucide',
+      icon: Github,
+      label: 'GitHub',
+      href: 'https://github.com/akashfoujdar0016',
+    },
+    {
+      kind: 'lucide',
+      icon: Linkedin,
+      label: 'LinkedIn',
+      href: 'https://www.linkedin.com/in/akash-foujdar-b04526326/',
+    },
+    {
+      kind: 'devicon',
+      devicon: 'devicon-leetcode-plain colored',
+      label: 'LeetCode',
+      href: 'https://leetcode.com/u/akashfoujdar0016/',
+    },
+    {
+      kind: 'lucide',
+      icon: Mail,
+      label: 'Email',
+      href: 'mailto:akashfoujdar16@gmail.com',
+    },
+  ];
 
 export function ContactSection() {
   return (
-    <section id="contact" className="relative pt-32 pb-40 md:pt-56 md:pb-72 lg:pt-72 lg:pb-96 px-8 md:px-10">
-      <div className="max-w-5xl mx-auto section-fade">
+    <section id="contact" className="relative pt-32 pb-40 md:pt-56 md:pb-72 lg:pt-72 lg:pb-96 px-6 md:px-10 lg:px-16">
+      <div className="max-w-7xl mx-auto section-fade">
         <div className="section-shell px-10 pt-16 pb-24 md:px-14 md:pt-20 md:pb-32">
           {/* Section header */}
           <div className="mb-40 md:mb-56">

@@ -46,7 +46,7 @@ export function Navbar({ activeSection }: NavbarProps) {
   return (
     <nav className="fixed top-0 left-0 right-0 z-[9999] backdrop-blur-md"
       style={{ background: 'rgba(3,3,5,0.88)', borderBottom: '1px solid rgba(255,0,51,0.08)' }}>
-      <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-center relative">
+      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-center relative">
         {/* Desktop nav */}
         <div className="hidden md:flex items-center gap-8">
           {navItems.map((item) => (
