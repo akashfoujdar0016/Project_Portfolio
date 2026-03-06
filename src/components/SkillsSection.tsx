@@ -12,7 +12,7 @@ const skills = [
 export function SkillsSection() {
   return (
     <section id="tech-stack" className="relative pt-32 pb-40 md:pt-56 md:pb-72 lg:pt-72 lg:pb-96 px-6 md:px-10 lg:px-16">
-      <div className="max-w-7xl mx-auto section-fade">
+      <div className="w-full section-fade" style={{ maxWidth: '1400px', marginLeft: 'auto', marginRight: 'auto' }}>
         <div className="section-shell px-10 pt-16 pb-24 md:px-14 md:pt-20 md:pb-32">
           {/* Section header */}
           <div className="mb-40 md:mb-56">

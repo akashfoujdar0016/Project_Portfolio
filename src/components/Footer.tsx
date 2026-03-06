@@ -7,7 +7,7 @@ export function Footer() {
         borderTop: '1px solid rgba(0, 255, 136, 0.12)',
       }}
     >
-      <div className="max-w-7xl mx-auto flex items-center justify-center">
+      <div className="flex items-center justify-center" style={{ maxWidth: '1400px', marginLeft: 'auto', marginRight: 'auto' }}>
         <span
           className="font-mono text-[0.72rem] tracking-[0.18em]"
           style={{
