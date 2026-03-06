@@ -1,30 +1,28 @@
 @import "tailwindcss";
 
-/* ── 1) ORIGINAL THEME (unchanged) ── */
+/* ── 1) LUXURY THEME ── */
 @theme {
   --font-space: 'Space Grotesk', sans-serif;
   --font-inter: 'Inter', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 
   --color-brand: #ff0033;
-  --color-brand-muted: rgba(255, 0, 51, 0.10);
   --color-bg-deep: #060608;
-
   --color-border-subtle: rgba(255, 255, 255, 0.06);
+
   --color-text-main: #e4e4e7;
   --color-text-muted: #a1a1aa;
-
+  
   --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* ── 2) BASE RESET ── */
+/* ── 2) BASE & ATMOSPHERE ── */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
 }
 
 html {
@@ -42,137 +40,68 @@ body {
   width: 100%;
 }
 
-/* Anchor jumps account for fixed navbar */
-section,
-[id] {
-  scroll-margin-top: 110px;
-}
+/* Scroll Offset for Navbar */
+section, [id] { scroll-margin-top: 100px; }
 
-::selection {
-  background: var(--color-brand);
-  color: #fff;
-}
-
-/* Scrollbar */
-::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background: var(--color-bg-deep); }
-::-webkit-scrollbar-thumb { background: #2b2b31; border-radius: 999px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(255, 0, 51, 0.7); }
-
-/* Subtle film grain */
+/* Subtle Grain Texture */
 body::before {
   content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 9999;
-  pointer-events: none;
-  opacity: 0.04;
+  position: fixed; inset: 0; z-index: 9999; pointer-events: none; opacity: 0.04;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
   mix-blend-mode: overlay;
 }
 
-/* ─────────────────────────────────────────────
-   3) NAVBAR — centered lane (spread like screenshot)
-   - Links spread across a centered lane
-   - Timer pinned rightmost
-   ───────────────────────────────────────────── */
+/* ─────────────────────────────────────────────────────────
+   3) NAVBAR: BULLETPROOF GRID LAYOUT (CLEAN & FIXED)
+   ───────────────────────────────────────────────────────── */
 nav {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
+  top: 0; left: 0; width: 100%;
   height: 80px;
   z-index: 1000;
-
+  
+  /* The Magic Fix: 3 Columns. Left (1fr) | Center (auto) | Right (1fr) */
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
   padding: 0 5%;
+
   background: rgba(6, 6, 8, 0.90);
   backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--color-border-subtle);
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  /* positioning context */
-  position: relative;
-
-  /* reserve edges so lane never hits logo/timer */
-  --nav-safe: clamp(170px, 20vw, 420px);
-  /* controls how wide the center “spread” feels */
-  --nav-lane-max: 860px;
 }
 
-/* Logo (left) */
+/* 1. LOGO (Left Column) */
 nav .logo {
+  grid-column: 1;
+  justify-self: start; /* Pins to left */
+  
   font-family: var(--font-space);
   font-weight: 700;
   font-size: 1.5rem;
-  letter-spacing: -0.02em;
   color: #fff;
   text-decoration: none;
   white-space: nowrap;
-  z-index: 30;
 }
 
-/* Timer (rightmost corner) */
-nav .timer,
-nav .nav-timer,
-nav [data-timer] {
-  position: absolute;
-  right: 5%;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 30;
-
-  font-family: var(--font-mono);
-  color: var(--color-brand);
-  font-weight: 600;
-  white-space: nowrap;
-}
-
-/* Center lane container (supports ul or div wrappers) */
-nav ul,
-nav .nav-links,
-nav .links,
-nav .menu {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-
-  height: 100%;
+/* 2. CENTER LINKS (Middle Column) */
+nav ul, 
+nav .nav-links, 
+nav .links {
+  grid-column: 2;
+  justify-self: center; /* Mathematically perfect center */
+  
   display: flex;
   align-items: center;
-
-  /* Spread across lane like your reference */
-  justify-content: space-between;
-
+  
+  /* Spread distance between items (Scales safely on smaller screens) */
+  gap: clamp(1.5rem, 4vw, 4.5rem) !important;
+  
   list-style: none;
-  margin: 0 !important;
-  padding: 0 !important;
-
-  /* Centered lane width (constrained) */
-  width: min(var(--nav-lane-max), calc(100% - (2 * var(--nav-safe))));
-
-  z-index: 10;
-
-  /* Don’t block logo/timer clicks */
-  pointer-events: none;
+  margin: 0; padding: 0;
 }
 
-/* Re-enable clicking on actual items */
-nav ul li,
-nav ul a,
-nav .nav-links a,
-nav .links a,
-nav .menu a {
-  pointer-events: auto;
-}
-
-/* Prevent flex stretching (especially in ul) */
-nav ul li { flex: 0 0 auto; }
-
-/* Link styling */
+/* Link Styling */
 .nav-link {
   font-family: var(--font-mono);
   font-size: 0.82rem;
@@ -181,38 +110,43 @@ nav ul li { flex: 0 0 auto; }
   text-decoration: none;
   text-transform: uppercase;
   letter-spacing: 0.14em;
-  white-space: nowrap;
+  white-space: nowrap; /* Prevents text from breaking into 2 lines */
   position: relative;
-  padding: 0.25rem 0.25rem;
   transition: color 0.25s ease;
 }
 
 .nav-link:hover { color: #fff; }
 
+/* Premium Underline Dot */
 .nav-link::after {
   content: "";
-  position: absolute;
-  left: 50%;
-  bottom: -8px;
+  position: absolute; left: 50%; bottom: -8px;
   transform: translateX(-50%) scale(0);
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
+  width: 4px; height: 4px; border-radius: 50%;
   background: var(--color-brand);
-  transition: transform 0.25s var(--ease-premium);
+  transition: transform 0.25s ease;
 }
 .nav-link:hover::after { transform: translateX(-50%) scale(1); }
 
-/* Responsive tuning */
-@media (max-width: 900px) {
-  nav {
-    --nav-safe: clamp(120px, 22vw, 260px);
-    --nav-lane-max: 640px;
-  }
-  .nav-link { font-size: 0.74rem; letter-spacing: 0.12em; }
+/* 3. TIMER (Right Column) */
+nav .timer, 
+nav [data-timer] {
+  grid-column: 3;
+  justify-self: end; /* Pins to rightmost corner */
+  
+  font-family: var(--font-mono);
+  color: var(--color-brand);
+  font-weight: 600;
+  white-space: nowrap;
 }
 
-/* ── 4) SECTIONS / TYPOGRAPHY ── */
+/* Responsive safety for Tablets/Mobile */
+@media (max-width: 950px) {
+  nav { gap: 1rem; }
+  .nav-link { font-size: 0.7rem; letter-spacing: 0.05em; }
+}
+
+/* ── 4) TYPOGRAPHY & SECTIONS ── */
 section {
   max-width: 85rem;
   margin: 0 auto;
@@ -228,19 +162,9 @@ section {
   color: var(--color-brand);
   text-transform: uppercase;
   margin-bottom: 1.5rem;
-
-  display: flex;
-  align-items: center;
-  gap: 1rem;
+  display: flex; align-items: center; gap: 1rem;
 }
-
-.section-label::before {
-  content: "";
-  width: 24px;
-  height: 1px;
-  background: var(--color-brand);
-  opacity: 0.7;
-}
+.section-label::before { content: ""; width: 24px; height: 1px; background: var(--color-brand); }
 
 .section-title {
   font-family: var(--font-space);
@@ -255,151 +179,87 @@ section {
 /* ── 5) GLASS SECTION SHELL ── */
 .section-shell {
   background: rgba(15, 15, 18, 0.60);
-  backdrop-filter: blur(22px) saturate(150%);
+  backdrop-filter: blur(22px);
   border: 1px solid rgba(255, 255, 255, 0.05);
   padding: 4rem;
   border-radius: 16px;
-  box-shadow:
-    0 30px 60px -12px rgba(0,0,0,0.55),
-    inset 0 1px 1px rgba(255,255,255,0.05);
-  transition:
-    transform 0.6s var(--ease-premium),
-    box-shadow 0.6s var(--ease-premium),
-    border-color 0.35s ease;
+  box-shadow: 0 30px 60px -12px rgba(0,0,0,0.55);
+  transition: all 0.6s var(--ease-premium);
 }
-
 .section-shell:hover {
   border-color: rgba(255, 0, 51, 0.20);
   transform: translateY(-4px);
-  box-shadow: 0 40px 80px -15px rgba(0,0,0,0.65);
 }
 
 /* ── 6) CARDS ── */
-.hack-card,
-.card,
-.project-card {
+.hack-card, .card, .project-card {
   background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.005) 100%);
   border: 1px solid var(--color-border-subtle);
   padding: 3rem;
   border-radius: 16px;
-  transition:
-    transform 0.5s var(--ease-premium),
-    border-color 0.35s ease,
-    background 0.35s ease;
-  position: relative;
-  overflow: hidden;
+  transition: all 0.5s var(--ease-premium);
 }
-
-.hack-card:hover,
-.card:hover,
-.project-card:hover {
-  border-color: rgba(255, 0, 51, 0.28);
+.hack-card:hover, .card:hover, .project-card:hover {
+  border-color: rgba(255, 0, 51, 0.3);
   transform: translateY(-5px);
-  background: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
+  background: rgba(255,255,255,0.05);
 }
 
-/* ── 7) TECH STACK (smaller icons) ── */
-.tech-stack-container,
-.tech-stack,
-.logos {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-
-  gap: 2.5rem;
-  margin-top: 3rem;
-  padding: 1.25rem 2.5rem;
-
+/* ── 7) TECH STACK (Small Icons) ── */
+.tech-stack-container, .tech-stack {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 2.5rem;
+  margin-top: 3rem; padding: 1.25rem 2.5rem;
   background: rgba(255, 255, 255, 0.02);
   border: 1px solid var(--color-border-subtle);
   border-radius: 999px;
   width: fit-content;
 }
-
-.tech-stack-container img,
-.tech-stack-container svg,
-.tech-stack img,
-.tech-stack svg {
-  height: 1.5rem !important; /* 24px */
+.tech-stack-container img, .tech-stack-container svg {
+  height: 1.5rem !important; /* Forces 24px */
   width: auto !important;
-  object-fit: contain;
-
   filter: grayscale(100%) opacity(0.55);
-  transition:
-    transform 0.35s var(--ease-premium),
-    filter 0.35s ease,
-    opacity 0.35s ease;
+  transition: all 0.35s ease;
 }
-
-.tech-stack-container img:hover,
-.tech-stack-container svg:hover,
-.tech-stack img:hover,
-.tech-stack svg:hover {
+.tech-stack-container img:hover, .tech-stack-container svg:hover {
   filter: grayscale(0%) opacity(1);
-  transform: translateY(-3px) scale(1.08);
+  transform: translateY(-3px) scale(1.1);
 }
 
-/* ── 8) CONTACT (more spacing between icons) ── */
-.contact-section,
-#contact,
-footer {
+/* ── 8) CONTACT SECTION (Spacious) ── */
+.contact-section, footer, #contact {
   text-align: center;
   padding: 8rem 0;
 }
 
-.contact-icons,
-.social-links,
-.footer-links {
+.contact-icons, .social-links {
   display: flex !important;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-
-  gap: clamp(3.5rem, 7vw, 7rem) !important;
+  gap: clamp(3.5rem, 7vw, 7rem) !important; /* HUGE SPACING */
   margin-top: 4rem;
   width: 100%;
 }
 
-.contact-icons > *,
-.social-links > *,
-.footer-links > * {
-  /* fallback spacing if something overrides gap */
-  margin-inline: clamp(1.75rem, 3vw, 3.5rem) !important;
-
+.contact-icons > *, .social-links > * {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   text-decoration: none;
   color: var(--color-text-muted);
-  transition: transform 0.35s var(--ease-premium), color 0.25s ease;
+  transition: all 0.35s ease;
 }
 
-.contact-icons svg,
-.contact-icons img,
-.social-links svg,
-.footer-links svg {
-  height: 2.25rem;
-  width: auto;
-  fill: currentColor;
-  transition: transform 0.35s var(--ease-premium), filter 0.25s ease;
+.contact-icons svg, .contact-icons img {
+  height: 2.25rem; width: auto; fill: currentColor;
+  transition: all 0.35s ease;
 }
 
-.contact-icons a:hover,
-.social-links a:hover,
-.footer-links a:hover {
+.contact-icons a:hover, .social-links a:hover {
   color: var(--color-brand);
   transform: translateY(-6px);
 }
-
-.contact-icons a:hover svg,
-.social-links a:hover svg,
-.footer-links a:hover svg {
+.contact-icons a:hover svg {
   transform: scale(1.15);
   filter: drop-shadow(0 0 14px rgba(255, 0, 51, 0.35));
-}
-
-/* ── 9) REDUCED MOTION ── */
-@media (prefers-reduced-motion: reduce) {
-  * { transition: none !important; }
-  html { scroll-behavior: auto !important; }
 }
